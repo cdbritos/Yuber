@@ -5,6 +5,37 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   
+  <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-servlet_3.0_spec</artifactId>
+                <version>1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+  
+  <dependencies>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+            <scope>provided</scope>
+	        </dependency>
+	        		<dependency>
+	    		<groupId>javax.ejb</groupId>
+	    		<artifactId>ejb-api</artifactId>
+	    		<version>3.0</version>
+	    		<scope>provided</scope>
+			</dependency>
+			<dependency>
+	    		<groupId>javax</groupId>
+	    		<artifactId>javaee-api</artifactId>
+	    		<version>7.0</version>
+	    		<scope>provided</scope>
+			</dependency>
+        
+    </dependencies>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
