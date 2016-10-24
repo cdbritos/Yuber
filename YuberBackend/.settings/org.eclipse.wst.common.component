@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="YuberBackend">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="YuberEJB.jar" deploy-path="/" handle="module:/resource/YuberEJB/YuberEJB">
+            <dependent-object>Module_1477268954596</dependent-object>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="YuberModel.jar" deploy-path="/lib" handle="module:/resource/YuberModel/YuberModel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
