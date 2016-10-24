@@ -35,8 +35,12 @@ public class InitDB {
     	
 			EntityManagerFactory managerFactory = null;
 			Map<String, String> persistenceMap = new HashMap<String, String>();
-
-			persistenceMap.put("javax.persistence.jtaDataSource", "jdbc/yuberDB1");
+			
+			String dataSource = System.getenv("dataSource");
+			if (dataSource == null)
+				dataSource = "yuberDB1";
+			
+			persistenceMap.put("javax.persistence.jtaDataSource", "jdbc/" + dataSource);
 
 			managerFactory = Persistence.createEntityManagerFactory("PU",persistenceMap);
 			
