@@ -6,6 +6,8 @@ import javax.ejb.Remote;
 
 import tsi2.yuber.model.entities.User;
 
+
+
 @Remote
 public interface IUserCommonServiceRemote {
 

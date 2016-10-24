@@ -3,7 +3,6 @@
 	<name>YuberEJB</name>
 	<comment></comment>
 	<projects>
-		<project>YuberModel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
