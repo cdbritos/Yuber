@@ -14,7 +14,7 @@ import tsi2.yuber.services.IUserCommonServiceRemote;
 public class UserCommonService implements IUserCommonServiceRemote {
 
 	
-	@PersistenceContext(unitName = "yuberAdmin")
+	@PersistenceContext(unitName = "PU")
     private EntityManager em;
      
 	

@@ -20,14 +20,14 @@ import tsi2.yuber.model.entities.User;
 @Singleton
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-@Startup
+//@Startup
 public class InitDB {
 
 	public InitDB() {
     }
    
     
-    @PostConstruct
+   // @PostConstruct
     private void initDB(){
     	EntityManager em;
     	

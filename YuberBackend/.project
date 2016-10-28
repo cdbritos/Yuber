@@ -5,7 +5,6 @@
 	<projects>
 		<project>YuberEJB</project>
 		<project>YuberModel</project>
-		<project>JavaHelloWorldApp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

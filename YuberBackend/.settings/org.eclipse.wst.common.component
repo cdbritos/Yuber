@@ -8,9 +8,5 @@
         <dependent-module archiveName="YuberModel.jar" deploy-path="/lib" handle="module:/resource/YuberModel/YuberModel">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="JavaHelloWorldApp.war" deploy-path="/" handle="module:/resource/JavaHelloWorldApp/JavaHelloWorldApp">
-            <dependent-object>Module_1477405461204</dependent-object>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
     </wb-module>
 </project-modules>
