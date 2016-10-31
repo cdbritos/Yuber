@@ -4,4 +4,10 @@
 	<module id="Module_1477268954596">
 		<ejb>YuberEJB.jar</ejb>
 	</module>
+	<module id="Module_1477875851770">
+		<web>
+			<web-uri>YuberServices.war</web-uri>
+			<context-root>YuberServices</context-root>
+		</web>
+	</module>
 </application>

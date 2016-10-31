@@ -5,6 +5,7 @@
 	<projects>
 		<project>YuberEJB</project>
 		<project>YuberModel</project>
+		<project>YuberServices</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
