@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import tsi2.yuber.model.constant.Constants;
 
 @Entity
-@Table(name="usuario")
-public class User extends AbstractEntity {
+@Table(name="proveedor")
+public class Proveedor extends AbstractEntity {
 
 	@Basic
 	@Column(length=Constants.COLUMN_LENGHT)
@@ -37,11 +37,11 @@ public class User extends AbstractEntity {
 	@Column(length=Constants.COLUMN_LENGHT)
 	private String password;
 
-	public User() {
+	public Proveedor() {
 		super();
 	}
 	
-	public User(String userName, String nombre, String apellido, String telefono, String direccion, String password) {
+	public Proveedor(String userName, String nombre, String apellido, String telefono, String direccion, String password) {
 		this();
 		this.userName = userName;
 		this.nombre = nombre;

@@ -2,45 +2,52 @@ package tsi2.yuber.services.impl;
 
 import java.util.List;
 
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
 
 import tsi2.yuber.model.entities.User;
-import tsi2.yuber.services.IUserCommonServiceRemote;
+import tsi2.yuber.services.IUserCommonServiceLocal;
 
 @Stateless
-public class UserCommonService implements IUserCommonServiceRemote {
+@Local(IUserCommonServiceLocal.class)
+@LocalBean
+public class UserCommonService extends AbstractService implements IUserCommonServiceLocal {
 
-	
-	@PersistenceContext(unitName = "PU")
-    private EntityManager em;
-     
-	
+		
 	public UserCommonService() {
 		
 	}
 	
 	@Override
-	public void saveUser(User user) {
-		em.persist(user);
+	public void saveUser(String verticalName, User user) {
+		getEntityManager(verticalName).persist(user);
 	}
 
 
 	@Override
-	public User findUser(User user) {
-		return em.find(User.class, user.getUserName());
+	public User findUser(String verticalName, User user) {
+		User userDB = getEntityManager(verticalName).find(User.class, user.getUserName());
+		if (userDB.getPassword().equals(user.getPassword()))
+			return userDB;
+		else return null;
 	}
 
 
 	@Override
-	public List<User> findAllUser() {
+	public List<User> findAllUser(String verticalName) {
 		String q = "SELECT u from " + User.class.getName() + " u";
-	    Query query = em.createQuery(q);
+		
+	    Query query = getEntityManager(verticalName).createQuery(q);
 	    List<User> users = query.getResultList();
 		return users;
 	}
+	
+	
+	
 
 }
 
