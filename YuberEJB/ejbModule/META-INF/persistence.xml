@@ -4,6 +4,7 @@
 		<class>tsi2.yuber.model.entities.User</class>
 		<class>tsi2.yuber.model.entities.Proveedor</class>
 		<class>tsi2.yuber.model.entities.Admin</class>
+		<class>tsi2.yuber.model.entities.Servicio</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 			<property name="javax.persistence.schema-generation.create-source" value="script"/>

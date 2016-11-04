@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var socket = new WebSocket("ws://localhost:8080/WebSocketServer/servicio")
+		socket.onmessage = function(event){
+			alert(event.data)
+		}
+		var obj = '{'
+		       +'"command" : "SolicitarServicio",'
+		       +'"userName"  : "matisanba",'
+		       +'"lat" : 10.254'
+		       +'}';
+	</script>
+	<button oncLick="socket.send(obj)">send</button>
+
+</body>
+</html>

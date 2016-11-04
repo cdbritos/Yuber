@@ -6,6 +6,7 @@
 		<project>YuberEJB</project>
 		<project>YuberModel</project>
 		<project>YuberServices</project>
+		<project>WebSocketServer</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
