@@ -1,0 +1,8 @@
+applications:
+- path: target/YuberServices.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: YuberServices
+  host: YuberServices
+  disk_quota: 1024M
