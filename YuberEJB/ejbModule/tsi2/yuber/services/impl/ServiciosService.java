@@ -2,14 +2,10 @@ package tsi2.yuber.services.impl;
 
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import tsi2.yuber.model.entities.Proveedor;
 import tsi2.yuber.model.entities.Servicio;
-import tsi2.yuber.services.IProveedorCommonServiceLocal;
 import tsi2.yuber.services.IServiciosServiceLocal;
 
 @Stateless

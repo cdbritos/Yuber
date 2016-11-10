@@ -33,7 +33,7 @@ public class UserServiceRest extends AbstractServiceRest{
 		InitialContext ctx;
 		try {
 			ctx = new InitialContext();
-			userCommonService = (IUserCommonServiceLocal) ctx.lookup("java:global/" + getAppName() + "/YuberEJB/UserCommonService!tsi2.yuber.services.IUserCommonServiceLocal");
+			userCommonService = (IUserCommonServiceLocal) ctx.lookup("java:global/" + getAppName() + "/YuberServices/UserCommonService!tsi2.yuber.services.IUserCommonServiceLocal");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

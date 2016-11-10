@@ -8,5 +8,13 @@
         <dependent-module archiveName="YuberModel.jar" deploy-path="/lib" handle="module:/resource/YuberModel/YuberModel">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="YuberServices.war" deploy-path="/" handle="module:/resource/YuberServices/YuberServices">
+            <dependent-object>Module_1478740165253</dependent-object>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="WebSocketServer-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/WebSocketServer/WebSocketServer">
+            <dependent-object>Module_1478740165456</dependent-object>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

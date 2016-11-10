@@ -3,12 +3,25 @@
 	<persistence-unit name="PU" transaction-type="JTA">
 		<class>tsi2.yuber.model.entities.User</class>
 		<class>tsi2.yuber.model.entities.Proveedor</class>
-		<class>tsi2.yuber.model.entities.Admin</class>
 		<class>tsi2.yuber.model.entities.Servicio</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 			<property name="javax.persistence.schema-generation.create-source" value="script"/>
-        	<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/create.sql" />
+        	<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/createVertical.sql" />
+        	<property name="javax.persistence.schema-generation.create-database-schemas" value="true"/>
+        	<property name="eclipselink.logging.logger" value="DefaultLogger"/>
+			<property name="eclipselink.logging.level" value="FINE"/>
+			<property name="eclipselink.logging.level.sql" value="FINE"/>
+			<property name="eclipselink.logging.parameters" value="true"/> 
+      	</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="DB" transaction-type="JTA">
+		<class>tsi2.yuber.model.entities.Vertical</class>
+		<properties>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+			<property name="javax.persistence.schema-generation.create-source" value="script"/>
+        	<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/createBackend.sql" />
         	<property name="javax.persistence.schema-generation.create-database-schemas" value="true"/>
         	<property name="eclipselink.logging.logger" value="DefaultLogger"/>
 			<property name="eclipselink.logging.level" value="FINE"/>

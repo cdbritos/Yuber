@@ -33,7 +33,7 @@ public class ProveedorServiceRest extends AbstractServiceRest {
 		InitialContext ctx;
 		try {
 			ctx = new InitialContext();
-			proveedorCommonService = (IProveedorCommonServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/YuberEJB/ProveedorCommonService!tsi2.yuber.services.IProveedorCommonServiceLocal");
+			proveedorCommonService = (IProveedorCommonServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/YuberServices/ProveedorCommonService!tsi2.yuber.services.IProveedorCommonServiceLocal");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

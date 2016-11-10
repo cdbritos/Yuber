@@ -14,20 +14,19 @@ import javax.naming.InitialContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
-import tsi2.yuber.model.entities.User;
-import tsi2.yuber.services.IUserCommonServiceLocal;
+import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IVerticalServiceLocal;
 
 @Stateless
 @Local(IVerticalServiceLocal.class)
 @LocalBean
 public class VerticalService extends AbstractService implements IVerticalServiceLocal {
-
-		
+	
 	public VerticalService() {
 		
 	}
 		
+	@Deprecated
 	@Override
 	@TransactionAttribute(value=TransactionAttributeType.NEVER)
 	public void createDataBase(String verticalName) {
@@ -65,6 +64,20 @@ public class VerticalService extends AbstractService implements IVerticalService
 		      }//end finally try
 		}
 
+	}
+
+	@Override
+	public List<Vertical> findAll() {
+		String q = "SELECT u from " + Vertical.class.getName() + " u";
+		
+	    Query query = getEntityManager().createQuery(q);
+	    List<Vertical> verticales = query.getResultList();
+		return verticales;
+	}
+
+	@Override
+	public void saveVertical(Vertical vertical) {
+		getEntityManager().persist(vertical);
 	}
 
 }
