@@ -60,16 +60,6 @@ public class ReportServiceRest extends AbstractServiceRest {
 		}
 	} 
 	
-	/*
-	 * select ano, mes, sum(ganancia) from (
-  select EXTRACT(YEAR FROM dt_transferencia_solicitud) as ano, EXTRACT(MONTH FROM dt_transferencia_solicitud) as mes, n_transferencia_devengado as ganancia from ENT_TRANSFERENCIA
-)
-group by 
-  ano, mes
-order by 
-  ano desc, mes desc
-
-	 */
 	
 	@GET
 	@Path(value="/report2/{verticalName}")

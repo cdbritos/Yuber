@@ -86,13 +86,14 @@ public class ReportService extends AbstractService implements IReportServiceLoca
 	}
 	
 	/*
-	select proveedor, sum(ganancia) as renta from (
-			  select id_empresa as proveedor, n_transferencia_devengado as ganancia from ENT_TRANSFERENCIA
+			select proveedor, avg(review) as rvw from (
+			  select id_empresa as proveedor, n_transferencia_devengado as review from ENT_TRANSFERENCIA
 			)
 			group by 
 			  proveedor
 			order by 
-			  renta desc
+			  rvw desc
+
 	*/
 	
 	@Override
@@ -118,12 +119,33 @@ public class ReportService extends AbstractService implements IReportServiceLoca
 		return dataList;
 	}
 
+	/*
+	      select usuario, count(*) as cantidad from (
+			  select id_empresa as usuario from ENT_TRANSFERENCIA
+			)
+			group by 
+			  usuario
+			order by 
+			  cantidad desc
+	*/
 	@Override
 	public List<DataReportUsuariosCantidadServicios> reportUsuariosCantidadServicios(String vertical) {
 		List<DataReportUsuariosCantidadServicios> dataList = new ArrayList<DataReportUsuariosCantidadServicios>();
 		return dataList;
 	}
 
+	/*
+			select usuario, avg(review) as rvw from (
+			  select id_empresa as usuario, n_transferencia_devengado as review from ENT_TRANSFERENCIA
+			)
+			group by 
+			  usuario
+			order by 
+			  rvw desc
+
+	*/
+	
+	
 	@Override
 	public List<DataReportUsuariosReviews> reportUsuariosReviews(String vertical) {
 		List<DataReportUsuariosReviews> dataList = new ArrayList<DataReportUsuariosReviews>();
