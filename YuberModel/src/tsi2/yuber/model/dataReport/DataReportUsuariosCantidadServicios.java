@@ -1,6 +1,6 @@
 package tsi2.yuber.model.dataReport;
 
-public class DataReport1 {
+public class DataReportUsuariosCantidadServicios extends DataReport{
 
 	private String verticalName;
 	private Integer cantidadUsuarios;
