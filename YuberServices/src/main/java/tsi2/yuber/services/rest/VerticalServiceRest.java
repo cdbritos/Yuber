@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response.Status;
 
 import com.google.gson.Gson;
 
-import tsi2.yuber.model.entities.User;
 import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IVerticalServiceLocal;
 
@@ -99,4 +98,35 @@ public class VerticalServiceRest extends AbstractServiceRest{
 		
 	} 
 
+	@GET
+	@Path(value="/populate/users/{verticalName}")
+	@Produces({MediaType.TEXT_PLAIN})
+	public Response populateUsers(@PathParam("verticalName") String verticalName){
+	
+		try {
+			verticalService.populateVerticalUsers(verticalName);
+			return Response.status(Status.OK).entity("OK").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+		
+	}
+	
+	
+	@GET
+	@Path(value="/populate/services/{verticalName}")
+	@Produces({MediaType.TEXT_PLAIN})
+	public Response populateServices(@PathParam("verticalName") String verticalName){
+	
+		try {
+			verticalService.populateVerticalServices(verticalName);
+			return Response.status(Status.OK).entity("OK").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+		
+	}
+	
 }

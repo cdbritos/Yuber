@@ -50,6 +50,13 @@ public class ProveedorCommonService extends AbstractService implements IProveedo
 				
 		return ((Long) query.getSingleResult()).intValue();
 	}
-	
+
+	@Override
+	public void populate(String verticalName) {
+		for (int j=0; j<10; j++){
+			Proveedor p = new Proveedor("proveedor"+j, "nombre"+j, "apellido"+j, "telefono"+j, "direccion"+j, "password"+j);
+			saveProveedor(verticalName, p);
+		}
+	}
 }
 

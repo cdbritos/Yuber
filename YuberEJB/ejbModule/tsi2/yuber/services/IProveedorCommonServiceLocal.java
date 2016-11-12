@@ -14,4 +14,6 @@ public interface IProveedorCommonServiceLocal {
 	
 	public Integer getCount(String verticalName);
 	
+	public void populate(String verticalName);
+	
 }

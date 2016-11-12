@@ -5,11 +5,8 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
 
-import tsi2.yuber.model.entities.Proveedor;
 import tsi2.yuber.model.entities.User;
 import tsi2.yuber.services.IUserCommonServiceLocal;
 
@@ -54,6 +51,14 @@ public class UserCommonService extends AbstractService implements IUserCommonSer
 		Query query = getEntityManager(verticalName).createQuery(q);
 				
 		return ((Long) query.getSingleResult()).intValue();
+	}
+
+	@Override
+	public void populate(String verticalName) {
+		for (int j=0; j<10; j++){
+			User u = new User("cliente"+j, "nombre"+j, "apellido"+j, "telefono"+j, "direccion"+j, "password"+j);
+			saveUser(verticalName, u);
+		}
 	}
 	
 	

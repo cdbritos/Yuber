@@ -12,4 +12,5 @@ public interface IServiciosServiceLocal {
 	public List<Servicio> findAll(String verticalName);
 	
 	public Integer getCount(String verticalName);
+	
 }
