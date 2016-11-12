@@ -6,6 +6,9 @@
         <dependent-module archiveName="YuberModel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/YuberModel/YuberModel">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="YuberEJB.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/YuberEJB/YuberEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/WebSocketServer/build/classes"/>
         <property name="context-root" value="WebSocketServer"/>
     </wb-module>

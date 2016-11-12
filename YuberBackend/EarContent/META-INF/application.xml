@@ -7,7 +7,7 @@
 			<context-root>YuberServices</context-root>
 		</web>
 	</module>
-	<module id="Module_1478740165456">
+	<module id="Module_1478941392156">
 		<web>
 			<web-uri>WebSocketServer-0.0.1-SNAPSHOT.war</web-uri>
 			<context-root>WebSocketServer</context-root>

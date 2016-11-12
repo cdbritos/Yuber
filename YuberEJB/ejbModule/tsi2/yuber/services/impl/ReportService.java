@@ -78,7 +78,7 @@ public class ReportService extends AbstractService implements IReportServiceLoca
 	    List<Object[]> dataResult = query.getResultList();
 	    
 	    for (Object[] object : dataResult) {
-	    	DataReportGananciaMensual item = new DataReportGananciaMensual((Double)object[0], (Double)object[1], (Double)object[2]);
+	    	DataReportGananciaMensual item = new DataReportGananciaMensual((Double)object[0],(Double)object[1], (Double)object[2]);
 	    	dataList.add(item);
 		}
 	    

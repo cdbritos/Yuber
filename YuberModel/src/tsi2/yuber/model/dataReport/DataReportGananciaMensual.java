@@ -2,32 +2,25 @@ package tsi2.yuber.model.dataReport;
 
 public class DataReportGananciaMensual extends DataReport {
 
-	private Integer anio;
-	private Integer mes;
+	private String fecha;
 	private Double ganancia;
 	
-	public DataReportGananciaMensual(Integer anio, Integer mes, Double ganancia) {
+	public DataReportGananciaMensual(String fecha, Double ganancia) {
 		super();
-		this.anio = anio;
-		this.mes = mes;
+		this.fecha = fecha;
 		this.ganancia = ganancia;
 	}
 	
-	public DataReportGananciaMensual(Double anio, Double mes, Double ganancia2) {
-		this(anio.intValue(),mes.intValue(),ganancia2);
+	public DataReportGananciaMensual(Double double1, Double double2, Double double3) {
+		this.fecha= ""+double1.intValue()+ (String.valueOf(double2.intValue()).length() == 1 ? "0" :"") + String.valueOf(double2.intValue()) ; 
+		this.ganancia=double3;
 	}
 
-	public Integer getAnio() {
-		return anio;
+	public String getFecha() {
+		return fecha;
 	}
-	public void setAnio(Integer anio) {
-		this.anio = anio;
-	}
-	public Integer getMes() {
-		return mes;
-	}
-	public void setMes(Integer mes) {
-		this.mes = mes;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 	public Double getGanancia() {
 		return ganancia;

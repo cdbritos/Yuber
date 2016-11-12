@@ -13,7 +13,7 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="WebSocketServer-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/WebSocketServer/WebSocketServer">
-            <dependent-object>Module_1478740165456</dependent-object>
+            <dependent-object>Module_1478941392156</dependent-object>
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
