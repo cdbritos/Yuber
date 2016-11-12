@@ -99,6 +99,11 @@ public class VerticalService extends AbstractService implements IVerticalService
 		
 	}
 
+	@Override
+	public Vertical findVertical(String verticalName) {
+		return getEntityManager().find(Vertical.class, verticalName);
+	}
+
 	
 }
 

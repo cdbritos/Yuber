@@ -10,6 +10,8 @@ public interface IVerticalServiceLocal {
 	
 	public List<Vertical> findAll();
 	
+	public Vertical findVertical(String verticalName);
+	
 	public void populateVerticalUsers(String verticalName);
 
 	public void populateVerticalServices(String verticalName);
