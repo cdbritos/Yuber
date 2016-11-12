@@ -172,6 +172,16 @@ public class ReportService extends AbstractService implements IReportServiceLoca
 	    
 		return dataList;
 	}
+
+	@Override
+	public List<Servicio> reportServicesByUser(String verticalName, String userName) {
+		return servicioService.findAllByUser(verticalName, userName);
+	}
+
+	@Override
+	public List<Servicio> reportServicesByProveedor(String verticalName, String proveedorName) {
+		return servicioService.findAllByProveedor(verticalName, proveedorName);
+	}
 		
 }
 

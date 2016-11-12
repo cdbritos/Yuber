@@ -6,6 +6,7 @@ import tsi2.yuber.model.dataReport.DataReportGananciaMensual;
 import tsi2.yuber.model.dataReport.DataReportReviews;
 import tsi2.yuber.model.dataReport.DataReportServicios;
 import tsi2.yuber.model.dataReport.DataReportUsuarioProveedor;
+import tsi2.yuber.model.entities.Servicio;
 
 public interface IReportServiceLocal {
 
@@ -20,5 +21,9 @@ public interface IReportServiceLocal {
 	public List<DataReportServicios> reportUsuariosCantidadServicios(String vertical);
 	
 	public List<DataReportReviews> reportUsuariosReviews(String vertical);
+	
+	public List<Servicio> reportServicesByUser(String verticalName, String userName);
+	
+	public List<Servicio> reportServicesByProveedor(String verticalName, String proveedorName);
 
 }

@@ -58,5 +58,15 @@ public class ProveedorCommonService extends AbstractService implements IProveedo
 			saveProveedor(verticalName, p);
 		}
 	}
+
+	@Override
+	public Proveedor login(String verticalName, Proveedor proveedor) {
+		Proveedor proDB = findProveedor(verticalName, proveedor);
+		
+		if (proDB != null && proDB.getPassword().equals(proveedor.getPassword()))
+			return proDB;
+		
+		return null;
+	}
 }
 

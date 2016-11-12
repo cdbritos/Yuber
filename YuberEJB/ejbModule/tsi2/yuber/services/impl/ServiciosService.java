@@ -41,4 +41,29 @@ public class ServiciosService extends AbstractService implements IServiciosServi
 		return ((Long) query.getSingleResult()).intValue();
 	}
 
+	@Override
+	public List<Servicio> findAllByUser(String verticalName, String userName) {
+		String q = "SELECT u from " + Servicio.class.getName() + 
+				   " u where u.cliente = :cliName" ;
+		
+		Query query = getEntityManager(verticalName).createQuery(q);
+		query.setParameter("cliName", userName);
+		
+		List<Servicio> servicios = query.getResultList();
+		return servicios;
+	}
+
+	@Override
+	public List<Servicio> findAllByProveedor(String verticalName, String proveedorName) {
+		String q = "SELECT u from " + Servicio.class.getName() + 
+				   " u where u.proveedor = :proName" ;
+		
+		Query query = getEntityManager(verticalName).createQuery(q);
+		query.setParameter("proName", proveedorName);
+		
+		List<Servicio> servicios = query.getResultList();
+		return servicios;	
+	}
+
+	
 }

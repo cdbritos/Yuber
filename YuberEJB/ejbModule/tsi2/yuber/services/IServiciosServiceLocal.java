@@ -11,6 +11,10 @@ public interface IServiciosServiceLocal {
 	
 	public List<Servicio> findAll(String verticalName);
 	
+	public List<Servicio> findAllByUser(String verticalName, String userName);
+	
+	public List<Servicio> findAllByProveedor(String verticalName, String proveedorName);
+	
 	public Integer getCount(String verticalName);
 	
 }

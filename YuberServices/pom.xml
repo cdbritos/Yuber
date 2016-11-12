@@ -37,6 +37,17 @@
     </dependencyManagement>
 
     <dependencies>
+    	<dependency>
+	      <groupId>YuberEJB</groupId>
+	      <artifactId>YuberEJB</artifactId>
+	      <version>0.0.1-SNAPSHOT</version>
+	      <type>ejb</type>
+	    </dependency>
+	    <dependency>
+	      <groupId>YuberModel</groupId>
+	      <artifactId>YuberModel</artifactId>
+	      <version>0.0.1-SNAPSHOT</version>
+	    </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-servlet_3.0_spec</artifactId>

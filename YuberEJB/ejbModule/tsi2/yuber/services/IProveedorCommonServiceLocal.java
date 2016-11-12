@@ -10,6 +10,8 @@ public interface IProveedorCommonServiceLocal {
 	
 	public Proveedor findProveedor(String verticalName, Proveedor proveedor);
 	
+	public Proveedor login(String verticalName, Proveedor proveedor);
+	
 	public List<Proveedor> findAllProveedor(String verticalName);
 	
 	public Integer getCount(String verticalName);

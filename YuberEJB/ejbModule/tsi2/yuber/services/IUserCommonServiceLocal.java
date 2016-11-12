@@ -10,6 +10,8 @@ public interface IUserCommonServiceLocal {
 	
 	public User findUser(String verticalName, User user);
 	
+	public User login(String verticalName,User user);
+	
 	public List<User> findAllUser(String verticalName);
 	
 	public Integer getCount(String verticalName);

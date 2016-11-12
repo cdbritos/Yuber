@@ -29,9 +29,8 @@ public class UserCommonService extends AbstractService implements IUserCommonSer
 	@Override
 	public User findUser(String verticalName, User user) {
 		User userDB = getEntityManager(verticalName).find(User.class, user.getUserName());
-		if (userDB.getPassword().equals(user.getPassword()))
-			return userDB;
-		else return null;
+		
+		return userDB;
 	}
 
 
@@ -59,6 +58,16 @@ public class UserCommonService extends AbstractService implements IUserCommonSer
 			User u = new User("cliente"+j, "nombre"+j, "apellido"+j, "telefono"+j, "direccion"+j, "password"+j);
 			saveUser(verticalName, u);
 		}
+	}
+
+	@Override
+	public User login(String verticalName, User user) {
+		User userDB = findUser(verticalName, user);
+		
+		if (userDB != null && userDB.getPassword().equals(user.getPassword()))
+			return userDB;
+		
+		return null;
 	}
 	
 	
