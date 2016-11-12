@@ -3,11 +3,9 @@ package tsi2.yuber.services;
 import java.util.List;
 
 import tsi2.yuber.model.dataReport.DataReportGananciaMensual;
-import tsi2.yuber.model.dataReport.DataReportProveedoresGanancias;
-import tsi2.yuber.model.dataReport.DataReportProveedoresReviews;
+import tsi2.yuber.model.dataReport.DataReportReviews;
+import tsi2.yuber.model.dataReport.DataReportServicios;
 import tsi2.yuber.model.dataReport.DataReportUsuarioProveedor;
-import tsi2.yuber.model.dataReport.DataReportUsuariosCantidadServicios;
-import tsi2.yuber.model.dataReport.DataReportUsuariosReviews;
 
 public interface IReportServiceLocal {
 
@@ -15,12 +13,12 @@ public interface IReportServiceLocal {
 	
 	public List<DataReportGananciaMensual> reportGananciaMensual(String vertical);
 	
-	public List<DataReportProveedoresReviews> reportProveedoresReviews(String vertical);
+	public List<DataReportReviews> reportProveedoresReviews(String vertical);
 	
-	public List<DataReportProveedoresGanancias> reportProveedoresGanancias(String vertical);
+	public List<DataReportServicios> reportProveedoresGanancias(String vertical);
 	
-	public List<DataReportUsuariosCantidadServicios> reportUsuariosCantidadServicios(String vertical);
+	public List<DataReportServicios> reportUsuariosCantidadServicios(String vertical);
 	
-	public List<DataReportUsuariosReviews> reportUsuariosReviews(String vertical);
+	public List<DataReportReviews> reportUsuariosReviews(String vertical);
 
 }

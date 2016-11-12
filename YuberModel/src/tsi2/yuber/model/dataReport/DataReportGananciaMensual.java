@@ -2,28 +2,40 @@ package tsi2.yuber.model.dataReport;
 
 public class DataReportGananciaMensual extends DataReport {
 
-	private String verticalName;
-	private Integer cantidadUsuarios;
-	private Integer cantidadProveedores;
+	private Integer anio;
+	private Integer mes;
+	private Double ganancia;
 	
-	public String getVerticalName() {
-		return verticalName;
+	public DataReportGananciaMensual(Integer anio, Integer mes, Double ganancia) {
+		super();
+		this.anio = anio;
+		this.mes = mes;
+		this.ganancia = ganancia;
 	}
-	public void setVerticalName(String verticalName) {
-		this.verticalName = verticalName;
+	
+	public DataReportGananciaMensual(Double anio, Double mes, Double ganancia2) {
+		this(anio.intValue(),mes.intValue(),ganancia2);
 	}
-	public Integer getCantidadUsuarios() {
-		return cantidadUsuarios;
+
+	public Integer getAnio() {
+		return anio;
 	}
-	public void setCantidadUsuarios(Integer cantidadUsuarios) {
-		this.cantidadUsuarios = cantidadUsuarios;
+	public void setAnio(Integer anio) {
+		this.anio = anio;
 	}
-	public Integer getCantidadProveedores() {
-		return cantidadProveedores;
+	public Integer getMes() {
+		return mes;
 	}
-	public void setCantidadProveedores(Integer cantidadProveedores) {
-		this.cantidadProveedores = cantidadProveedores;
+	public void setMes(Integer mes) {
+		this.mes = mes;
 	}
+	public Double getGanancia() {
+		return ganancia;
+	}
+	public void setGanancia(Double ganancia) {
+		this.ganancia = ganancia;
+	}
+
 	
 	
 	

@@ -15,11 +15,9 @@ import javax.ws.rs.core.Response.Status;
 import com.google.gson.Gson;
 
 import tsi2.yuber.model.dataReport.DataReportGananciaMensual;
-import tsi2.yuber.model.dataReport.DataReportProveedoresGanancias;
-import tsi2.yuber.model.dataReport.DataReportProveedoresReviews;
+import tsi2.yuber.model.dataReport.DataReportReviews;
+import tsi2.yuber.model.dataReport.DataReportServicios;
 import tsi2.yuber.model.dataReport.DataReportUsuarioProveedor;
-import tsi2.yuber.model.dataReport.DataReportUsuariosCantidadServicios;
-import tsi2.yuber.model.dataReport.DataReportUsuariosReviews;
 import tsi2.yuber.services.IReportServiceLocal;
 
 @Path("/report")
@@ -89,7 +87,7 @@ public class ReportServiceRest extends AbstractServiceRest {
 		
 		try {
 			
-			List<DataReportProveedoresReviews> dataList = reportService.reportProveedoresReviews(verticalName);
+			List<DataReportReviews> dataList = reportService.reportProveedoresReviews(verticalName);
 						
 			result = new Gson().toJson(dataList);
 			
@@ -110,7 +108,7 @@ public class ReportServiceRest extends AbstractServiceRest {
 		
 		try {
 			
-			List<DataReportProveedoresGanancias> dataList = reportService.reportProveedoresGanancias(verticalName);
+			List<DataReportServicios> dataList = reportService.reportProveedoresGanancias(verticalName);
 						
 			result = new Gson().toJson(dataList);
 			
@@ -131,7 +129,7 @@ public class ReportServiceRest extends AbstractServiceRest {
 		
 		try {
 			
-			List<DataReportUsuariosCantidadServicios> dataList = reportService.reportUsuariosCantidadServicios(verticalName);
+			List<DataReportServicios> dataList = reportService.reportUsuariosCantidadServicios(verticalName);
 						
 			result = new Gson().toJson(dataList);
 			
@@ -151,7 +149,7 @@ public class ReportServiceRest extends AbstractServiceRest {
 		
 		try {
 			
-			List<DataReportUsuariosReviews> dataList = reportService.reportUsuariosReviews(verticalName);
+			List<DataReportReviews> dataList = reportService.reportUsuariosReviews(verticalName);
 						
 			result = new Gson().toJson(dataList);
 			

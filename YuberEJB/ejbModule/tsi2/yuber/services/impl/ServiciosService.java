@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+import tsi2.yuber.model.entities.Proveedor;
 import tsi2.yuber.model.entities.Servicio;
 import tsi2.yuber.services.IServiciosServiceLocal;
 
@@ -29,6 +30,15 @@ public class ServiciosService extends AbstractService implements IServiciosServi
 	    Query query = getEntityManager(verticalName).createQuery(q);
 	    List<Servicio> servicios = query.getResultList();
 		return servicios;
+	}
+	
+	@Override
+	public Integer getCount(String verticalName) {
+		String q = "SELECT count(t) from " + Servicio.class.getName() + " t";
+		
+		Query query = getEntityManager(verticalName).createQuery(q);
+				
+		return ((Long) query.getSingleResult()).intValue();
 	}
 
 }

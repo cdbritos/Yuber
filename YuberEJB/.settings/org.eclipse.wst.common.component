@@ -2,7 +2,6 @@
     <wb-module deploy-name="YuberEJB">
         <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
         <wb-resource deploy-path="/" source-path="/.apt_generated"/>
-        <wb-resource deploy-path="/" source-path="/src/test/java"/>
         <dependent-module archiveName="YuberModel.jar" deploy-path="/" handle="module:/resource/YuberModel/YuberModel">
             <dependency-type>uses</dependency-type>
         </dependent-module>

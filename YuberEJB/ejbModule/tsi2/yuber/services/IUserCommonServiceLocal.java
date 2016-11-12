@@ -12,4 +12,6 @@ public interface IUserCommonServiceLocal {
 	
 	public List<User> findAllUser(String verticalName);
 	
+	public Integer getCount(String verticalName);
+	
 }

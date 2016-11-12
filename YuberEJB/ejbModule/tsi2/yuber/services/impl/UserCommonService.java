@@ -9,6 +9,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
 
+import tsi2.yuber.model.entities.Proveedor;
 import tsi2.yuber.model.entities.User;
 import tsi2.yuber.services.IUserCommonServiceLocal;
 
@@ -46,6 +47,14 @@ public class UserCommonService extends AbstractService implements IUserCommonSer
 		return users;
 	}
 	
+	@Override
+	public Integer getCount(String verticalName) {
+		String q = "SELECT count(t) from " + User.class.getName() + " t";
+		
+		Query query = getEntityManager(verticalName).createQuery(q);
+				
+		return ((Long) query.getSingleResult()).intValue();
+	}
 	
 	
 

@@ -12,4 +12,6 @@ public interface IProveedorCommonServiceLocal {
 	
 	public List<Proveedor> findAllProveedor(String verticalName);
 	
+	public Integer getCount(String verticalName);
+	
 }

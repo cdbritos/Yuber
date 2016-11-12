@@ -42,5 +42,14 @@ public class ProveedorCommonService extends AbstractService implements IProveedo
 		return proveedores;
 	}
 	
+	@Override
+	public Integer getCount(String verticalName) {
+		String q = "SELECT count(t) from " + Proveedor.class.getName() + " t";
+		
+		Query query = getEntityManager(verticalName).createQuery(q);
+				
+		return ((Long) query.getSingleResult()).intValue();
+	}
+	
 }
 

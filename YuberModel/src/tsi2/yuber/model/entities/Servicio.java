@@ -2,15 +2,11 @@ package tsi2.yuber.model.entities;
 
 import java.util.Date;
 
-import javax.annotation.Generated;
-import javax.json.JsonNumber;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -23,17 +19,27 @@ public class Servicio {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private short servicioId;
 	
+	@Column
 	private String proveedor;
+	@Column
 	private String cliente;
+	@Column
 	private String status;
+	@Column
 	private Date startTime;
+	@Column
 	private Date finishTime;
+	@Column
 	private int reviewProveedor;
+	@Column
 	private int reviewCliente;
+	@Column
 	private Double cost;
+	@Column
 	private long duration;
 	
 	@Size(max = 500)
+	@Column
 	private String customData;
 
 	
