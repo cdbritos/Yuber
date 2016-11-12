@@ -4,6 +4,10 @@ package tsi2.yuber.services.rest;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +27,7 @@ import com.google.gson.Gson;
 
 import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IVerticalServiceLocal;
+import tsi2.yuber.services.util.VCAPUtils;
 
 @Path("/vertical")
 public class VerticalServiceRest extends AbstractServiceRest{
@@ -89,7 +94,73 @@ public class VerticalServiceRest extends AbstractServiceRest{
 	public Response createDataBase(@PathParam("verticalName") String verticalName){
 	
 		try {
-			verticalService.createDataBase(verticalName);
+			
+			
+			System.out.println("-------- PostgreSQL "
+					+ "JDBC Connection Testing ------------");
+
+			try {
+
+				Class.forName("org.postgresql.Driver");
+
+			} catch (ClassNotFoundException e) {
+
+				System.out.println("Where is your PostgreSQL JDBC Driver? "
+						+ "Include in your library path!");
+				e.printStackTrace();
+				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+			}
+
+			System.out.println("PostgreSQL JDBC Driver Registered!");
+
+			Connection connection = null;
+			Statement stmt = null;
+			try {
+				String uri_jdbc = "jdbc:postgresql://" + VCAPUtils.getHostDBConnection(verticalName) +
+						":" + VCAPUtils.getPortDBConnection(verticalName) + "/compose";
+				
+				System.out.println("CONECTANDO A: " + uri_jdbc);
+						
+				connection = DriverManager.getConnection(uri_jdbc,VCAPUtils.getUserDBConnection(verticalName), VCAPUtils.getPasswordDBConnection(verticalName));
+						
+				stmt = connection.createStatement();
+							
+				String dataBaseName = VCAPUtils.getDataBaseNameDBConnection(verticalName);
+				
+				String sql = "CREATE DATABASE " +  dataBaseName;
+				System.out.println(sql);
+				
+				stmt.executeUpdate(sql);
+				
+				
+			} catch (SQLException e) {
+
+				System.out.println("Connection Failed! Check output console");
+				e.printStackTrace();
+				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+
+			} finally{//finally block used to close resources
+				if (connection != null) {
+					System.out.println("You made it, take control your database now!");
+				} else {
+					System.out.println("Failed to make connection!");
+				}
+
+				
+				try{
+			         if(stmt!=null)
+			            stmt.close();
+			      }catch(SQLException se2){
+			      }// nothing we can do
+			      try{
+			         if(connection!=null)
+			            connection.close();
+			      }catch(SQLException se){
+			         se.printStackTrace();
+			      }//end finally try
+			}
+
 			return Response.status(Status.OK).entity("OK").build();
 		} catch (Exception e) {
 			e.printStackTrace();
