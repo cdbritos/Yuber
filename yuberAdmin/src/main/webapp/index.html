@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>YUBER Administracion</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<form action="VerticalServlet" method="get">
+		<ul>
+			<li>
+				<label>
+					Nombre:
+				</label>
+				<input type="text" name="name"/>
+			</li>
+			<li>
+				<label>
+					Tipo Vertical:
+				</label>
+				<input type="radio" name="tipoVerticalId" value="1" checked="checked">Transporte</input> 
+			</li>
+			<li>
+				<label>
+					Tarifa Base:
+				</label>
+				<input type="number" name="tarifaBase"/>
+			</li>
+			<li>
+				<label>
+					Precio Hr o Km:
+				</label>
+				<input type="number" name="precio"/>
+			</li>
+			<li>
+				<label>
+					Url logo:
+				</label>
+				<input type="text" name="urlLogo"/>
+			</li>
+			<li>
+				<label>
+					Color:
+				</label>
+				<input type="color" name="color"/>
+			</li>
+			<li>
+				<label>
+					Url web:
+				</label>
+				<input type="text" name="urlWeb"/>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<label>
+					User Bluemix:
+				</label>
+				<input type="text" name="userBluemix"/>
+			</li>
+			<li>
+				<label>
+					Password Bluemix:
+				</label>
+				<input type="password" name="passBluemix"/>
+			</li>
+			<li>
+				<label>
+					Organizacion Bluemix:
+				</label>
+				<input type="text" name="orgBluemix"/>
+			</li>
+			<li>
+				<label>
+					Space Bluemix:
+				</label>
+				<input type="text" name="spaceBluemix"/>
+			</li>
+		</ul>
+		<input type="submit" value="Crear Vertical">
+	</form>
+	<hr>
+	<form action="ReportServlet" method="get">
+		<ul>
+			<li>
+				<label>
+					Reporte Sobre Tipo Vertical:
+				</label>
+				<input type="radio" name="tipoVertical" value="TRANSPORT" checked="checked">Transporte</input> 
+				<input type="radio" name="tipoVertical" value="ONSITE" >OnSite</input>
+			</li>
+			<li>
+				<label>
+					Vertical
+				</label>
+				<input type="radio" name="verticalName" value="PAPA" checked="checked">PAPA</input> 
+				<input type="radio" name="verticalName" value="PRUEBA" >PRUEBA</input>
+				<input type="radio" name="verticalName" value="REPORT" >REPORT</input>
+			</li>
+			<li>
+				<label>
+					Tipo Reporte:
+				</label>
+				<input type="radio" name="tipoReporteId" value="1" checked="checked">Usuarios/Proveedores</input>
+				<input type="radio" name="tipoReporteId" value="2" >Ganancia Mensual</input> 
+				<input type="radio" name="tipoReporteId" value="3" >Proveedores Reviews</input> 
+				<input type="radio" name="tipoReporteId" value="4" >Proveedores Ganancias</input> 
+				<input type="radio" name="tipoReporteId" value="5" >Usuarios Servicios</input> 
+				<input type="radio" name="tipoReporteId" value="6" >Usuarios Reviews</input>  
+			</li>
+		</ul>
+		<input type="submit" value="Crear Reporte">
+	</form>	
+
+	
+</body>
+</html>

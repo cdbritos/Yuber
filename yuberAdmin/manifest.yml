@@ -1,0 +1,10 @@
+applications:
+- path: target/YuberAdmin.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: yuberAdmin
+  host: yuberAdmin
+  disk_quota: 512M
+  services:
+  - yuberAdminDB
