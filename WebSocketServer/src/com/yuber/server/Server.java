@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -21,9 +22,11 @@ import com.yuber.collections.ManejadorVertical;
 import com.yuber.collections.VerticalesManager;
 
 import tsi2.yuber.model.entities.Servicio;
+import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IProveedorCommonServiceLocal;
 //import tsi2.yuber.services.IServiciosServiceLocal;
 import tsi2.yuber.services.IServiciosServiceLocal;
+import tsi2.yuber.services.IVerticalServiceLocal;
 
 import java.util.Date;;
 
@@ -91,17 +94,17 @@ public class Server {
 		    		Session var = sessionTimer;
 					try {
 						Thread.sleep(timeoutSolicitar);
+						Match mat = man.getMatch(var.getId());
+						if (mat.getStatus().equals("Pendiente")){
+							mat.setStatus("Timeout");
+							ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
+							var.getAsyncRemote().sendObject(respTimeOut);
+						}
+						this.join();
 					} catch (InterruptedException e) {
-
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					Match mat = man.getMatch(var.getId());
-					if (mat.getStatus().equals("Pendiente")){
-						mat.setStatus("Timeout");
-						ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
-						var.getAsyncRemote().sendObject(respTimeOut);
-					}
-					
-					
 		    }  
 		};
 		if (message.getCommand().equals("ProveedorDisponible")){
@@ -123,9 +126,6 @@ public class Server {
 					session.getAsyncRemote().sendObject(respMatchProveedor);
 				}
 			}
-		}
-		if (message.getCommand().equals("ClienteNuevo")){
-			
 		}
 		if (message.getCommand().equals("SolicitarServicio")){
 			man.CrearCliente(session.getId(),message.getUserName(),message.getLat(),message.getLng(),message.getAddress());
@@ -230,9 +230,9 @@ public class Server {
 			Cliente cliente = man.getCliente(clienteId);
 			Session sessionCli = man.getSession(clienteId);
 			Double distTotal = calcularDistanciaTotal(mat.getPositions());
-			Double cost = 10*distTotal; //aca iria el precio de la vertical
 			long tiempoServicio = (mat.getFinishTime().getTime() - mat.getStartTime().getTime())/1000; //cantidad segundos de servicio
 			tiempoServicio = tiempoServicio / 60; //en minutos
+			Double cost = CalcularCostoServicio(vertical, tiempoServicio, distTotal);
 			mat.setDuration(tiempoServicio);
 			mat.setCost(cost);
 			mat.setDisTotal(distTotal);
@@ -249,7 +249,6 @@ public class Server {
 				mat.setReviewCliente(message.getRating());
 				Proveedor prov = man.getProveedor(mat.getProveedorId());
 				Cliente cli = man.getCliente(session.getId());
-				// aca se deberia persistir el historico
 				//se elimina de memoria
 				InitialContext ctx = new InitialContext();
 				System.out.println("Culmino el servicio: "+mat.toString());
@@ -305,7 +304,29 @@ public class Server {
 	}
 	
 	private Double CalcularCostoServicio(String vertical,long timeService,double dist){
-		return 0.0;
+		String tipoVertical = System.getenv("tipoVertical");
+		InitialContext ctx;
+		Double total = 0.0;
+		try {
+			ctx = new InitialContext();
+			IVerticalServiceLocal verticalService = (IVerticalServiceLocal) ctx.lookup("java:global/" + getAppName() + "/YuberServices/VerticalService!tsi2.yuber.services.IVerticalServiceLocal");
+			Vertical vert = verticalService.findVertical(vertical);
+			if (tipoVertical.equals("1")){
+				// tipo transporte
+				Double tarBase = vert.getTarifaBase();
+				Double preKm = vert.getPrecio();
+				total = tarBase + preKm * dist;
+			}else{
+				//tipo on-site
+				Double tarBase = vert.getTarifaBase();
+				Double preTime = vert.getPrecio();
+				total = tarBase + preTime * timeService;
+			}
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return total;
 	}
 
 }
