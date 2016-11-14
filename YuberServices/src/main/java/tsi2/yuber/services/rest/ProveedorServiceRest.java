@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,7 +21,9 @@ import javax.ws.rs.core.Response.Status;
 import com.google.gson.Gson;
 
 import tsi2.yuber.model.entities.Proveedor;
+import tsi2.yuber.model.entities.Servicio;
 import tsi2.yuber.services.IProveedorCommonServiceLocal;
+import tsi2.yuber.services.util.HistorialCabezal;
 
 @Path("/proveedor")
 public class ProveedorServiceRest extends AbstractServiceRest {
@@ -41,7 +44,6 @@ public class ProveedorServiceRest extends AbstractServiceRest {
 	}
 	
 	@POST
-	@Path(value="/register")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
 	public Response register(InputStream data) {
@@ -109,8 +111,24 @@ public class ProveedorServiceRest extends AbstractServiceRest {
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
-		
-		
-	} 
+	}
+	
+	@GET
+	@Path(value="/{username}/servicios")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response getServiciosProveedor(@PathParam("username") String username,@HeaderParam("verticalName") String vertical){
+		String result = null;
+		try {
+			List<Servicio> servicios = proveedorCommonService.findServiciosProveedor(vertical, username);
+			HistorialCabezal historial = new HistorialCabezal(servicios);
+			result = new Gson().toJson(historial);
+			
+			return Response.status(Status.OK).entity(result).build();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
 	
 }

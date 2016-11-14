@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -16,13 +17,16 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
 import com.yuber.collections.ManejadorVertical;
 import com.yuber.collections.VerticalesManager;
 
 import tsi2.yuber.model.entities.Servicio;
+import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IProveedorCommonServiceLocal;
 //import tsi2.yuber.services.IServiciosServiceLocal;
 import tsi2.yuber.services.IServiciosServiceLocal;
+import tsi2.yuber.services.IVerticalServiceLocal;
 
 import java.util.Date;;
 
@@ -54,6 +58,7 @@ public class Server {
     public void onOpen(Session session,@PathParam("vertical") String vertical) {
 		ManejadorVertical man = VerticalesManager.getInstance().obtenerManejador(vertical);
         System.out.println("New websocket session opened in "+vertical +": " + session.getId());
+        session.setMaxIdleTimeout(0);
 		man.CrearSession(session);
     }
 	 
@@ -89,17 +94,17 @@ public class Server {
 		    		Session var = sessionTimer;
 					try {
 						Thread.sleep(timeoutSolicitar);
+						Match mat = man.getMatch(var.getId());
+						if (mat.getStatus().equals("Pendiente")){
+							mat.setStatus("Timeout");
+							ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
+							var.getAsyncRemote().sendObject(respTimeOut);
+						}
+						this.join();
 					} catch (InterruptedException e) {
-
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					Match mat = man.getMatch(var.getId());
-					if (mat.getStatus().equals("Pendiente")){
-						mat.setStatus("Timeout");
-						ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
-						var.getAsyncRemote().sendObject(respTimeOut);
-					}
-					
-					
 		    }  
 		};
 		if (message.getCommand().equals("ProveedorDisponible")){
@@ -122,14 +127,12 @@ public class Server {
 				}
 			}
 		}
-		if (message.getCommand().equals("ClienteNuevo")){
+		if (message.getCommand().equals("SolicitarServicio")){
 			man.CrearCliente(session.getId(),message.getUserName(),message.getLat(),message.getLng(),message.getAddress());
 			System.out.println("Se agrego cliente: "+message.getUserName()+" en "+vertical);
 			ServiceLocation respOk = new ServiceLocation();
 			respOk.setCommand("Ok");
 			session.getAsyncRemote().sendObject(respOk);
-		}
-		if (message.getCommand().equals("SolicitarServicio")){
 			Cliente cli = man.getCliente(session.getId());
 			System.out.println("Cliente: "+cli.getUserName()+"solicita servico");
 			man.CrearMatch("",session.getId());
@@ -146,16 +149,19 @@ public class Server {
 		}
 		if (message.getCommand().equals("ProveedorPosicion")){
 			System.out.println("proveedor update pos: "+message.getLat().toString());
-			Match mat = man.getMatch(session.getId());
-			if (mat.getStatus().equals("Active")){
-				mat.addPosition(message.getLat(),message.getLng());
+			Proveedor prov = man.getProveedor(session.getId());
+			if (!prov.getClientePendienteMatchId().isEmpty()){
+				Match mat = man.getMatch(session.getId());
+				if (mat.getStatus().equals("Active")){
+					mat.addPosition(message.getLat(),message.getLng());
+					Session sessionCli = man.getSession(mat.getClienteId());
+					ServiceLocation respUpdate = new ServiceLocation("UpdatePos", "",message.getLat(),message.getLng(),"");
+					sessionCli.getAsyncRemote().sendObject(respUpdate);
+				}
 			}
 				Proveedor provViejo = man.getProveedor(session.getId());
 				provViejo.setLat(message.getLat());
 				provViejo.setLng(message.getLng());
-				Session sessionCli = man.getSession(mat.getClienteId());
-				ServiceLocation respUpdate = new ServiceLocation("UpdatePos", "",message.getLat(),message.getLng(),"");
-				sessionCli.getAsyncRemote().sendObject(respUpdate);
 		}	
 		if (message.getCommand().equals("ProveedorAcceptMatch")){
 			Proveedor prov = man.getProveedor(session.getId());
@@ -216,6 +222,7 @@ public class Server {
 			mat.setFinishLat(message.getLat());
 			mat.setFinishLng(message.getLng());
 			mat.setStatus("Finished");
+			System.out.println("Finalizar servicio: "+mat.toString());
 			Date date = new Date();
 			mat.setFinishTime(date);
 			mat.setReviewProveedor(message.getRating());
@@ -224,16 +231,18 @@ public class Server {
 			Cliente cliente = man.getCliente(clienteId);
 			Session sessionCli = man.getSession(clienteId);
 			Double distTotal = calcularDistanciaTotal(mat.getPositions());
-			Double cost = 10*distTotal; //aca iria el precio de la vertical
 			long tiempoServicio = (mat.getFinishTime().getTime() - mat.getStartTime().getTime())/1000; //cantidad segundos de servicio
 			tiempoServicio = tiempoServicio / 60; //en minutos
-			cost += 2*tiempoServicio; // aca iria el tiempo por minuto
+			System.out.println("Finalizar servicio: calcular costo");
+			Double cost = CalcularCostoServicio(vertical, tiempoServicio, distTotal);
 			mat.setDuration(tiempoServicio);
 			mat.setCost(cost);
 			mat.setDisTotal(distTotal);
 			ServiceLocation respTarifa = new ServiceLocation("ServicioFinalizado","",null,null,"","",0,cost);
 			session.getAsyncRemote().sendObject(respTarifa);
 			sessionCli.getAsyncRemote().sendObject(respTarifa);
+			Proveedor prov = man.getProveedor(session.getId());
+			prov.setClientePendienteMatchId("");
 		}
 		if (message.getCommand().equals("ReviewCliente")){
 			Match mat = man.getMatch(session.getId());
@@ -242,12 +251,13 @@ public class Server {
 				mat.setReviewCliente(message.getRating());
 				Proveedor prov = man.getProveedor(mat.getProveedorId());
 				Cliente cli = man.getCliente(session.getId());
-				// aca se deberia persistir el historico
 				//se elimina de memoria
 				InitialContext ctx = new InitialContext();
 				System.out.println("Culmino el servicio: "+mat.toString());
-				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/YuberEJB/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
+				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/WebSocketServer-0.0.1-SNAPSHOT/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
 				Servicio serv = new Servicio(prov.getUserName(),cli.getUserName(),mat.getStatus(),mat.getStartTime(),mat.getFinishTime(),mat.getReviewProveedor(),mat.getReviewCliente(),mat.getCost(),mat.getDuration(),"");
+				CustomData cdata = new CustomData(mat.getStartLat(),mat.getStartLng(),mat.getFinishLat(),mat.getFinishLng(),mat.getDisTotal(),mat.getPositions());
+				serv.setCustomData(new Gson().toJson(cdata));
 				services.saveServicio(serv, vertical);
 				session.close(); //cierro websocket cliente
 				man.BorrarMatch(mat);
@@ -293,6 +303,35 @@ public class Server {
 		if ( appName == null)
 			return "myapp";
 		return appName;
+	}
+	
+	private Double CalcularCostoServicio(String vertical,long timeService,double dist){
+		
+		String tipoVertical = System.getenv("tipoVertical");
+		System.out.println("Calcular costo vertical: "+tipoVertical);
+		InitialContext ctx;
+		Double total = 0.0;
+		try {
+			ctx = new InitialContext();
+			IVerticalServiceLocal verticalService = (IVerticalServiceLocal) ctx.lookup("java:global/" + getAppName() + "/WebSocketServer-0.0.1-SNAPSHOT/VerticalService!tsi2.yuber.services.IVerticalServiceLocal");
+			Vertical vert = verticalService.findVertical(vertical);
+			System.out.println("Agarre la vertical: "+vert.toString());
+			if (tipoVertical.equals("1")){
+				// tipo transporte
+				Double tarBase = vert.getTarifaBase();
+				Double preKm = vert.getPrecio();
+				total = tarBase + preKm * dist;
+			}else{
+				//tipo on-site
+				Double tarBase = vert.getTarifaBase();
+				Double preTime = vert.getPrecio();
+				total = tarBase + preTime * timeService;
+			}
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return total;
 	}
 
 }

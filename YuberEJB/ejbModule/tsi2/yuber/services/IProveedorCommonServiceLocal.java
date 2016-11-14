@@ -3,6 +3,7 @@ package tsi2.yuber.services;
 import java.util.List;
 
 import tsi2.yuber.model.entities.Proveedor;
+import tsi2.yuber.model.entities.Servicio;
 
 public interface IProveedorCommonServiceLocal {
 
@@ -17,5 +18,7 @@ public interface IProveedorCommonServiceLocal {
 	public Integer getCount(String verticalName);
 	
 	public void populate(String verticalName);
+
+	public List<Servicio> findServiciosProveedor(String vertical, String username);
 	
 }

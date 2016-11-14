@@ -5,9 +5,11 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import tsi2.yuber.model.entities.Proveedor;
+import tsi2.yuber.model.entities.Servicio;
 import tsi2.yuber.services.IProveedorCommonServiceLocal;
 
 @Stateless
@@ -67,6 +69,15 @@ public class ProveedorCommonService extends AbstractService implements IProveedo
 			return proDB;
 		
 		return null;
+	}
+
+	@Override
+	public List<Servicio> findServiciosProveedor(String verticalName, String username) {
+		// TODO Auto-generated method stub
+		EntityManager em = getEntityManager(verticalName);
+		Query query = em.createQuery("Select s from Servicio s where s.proveedor=:arg1");
+		query.setParameter("arg1", username);
+		return query.getResultList();
 	}
 }
 
