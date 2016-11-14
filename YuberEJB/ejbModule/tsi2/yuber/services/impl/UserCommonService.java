@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import tsi2.yuber.model.entities.Servicio;
 import tsi2.yuber.model.entities.User;
 import tsi2.yuber.services.IUserCommonServiceLocal;
 
@@ -68,6 +70,16 @@ public class UserCommonService extends AbstractService implements IUserCommonSer
 			return userDB;
 		
 		return null;
+	}
+
+	@Override
+	public List<Servicio> findServiciosUser(String verticalName, String username) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		EntityManager em = getEntityManager(verticalName);
+		Query query = em.createQuery("Select s from Servicio s where s.cliente=:arg1");
+		query.setParameter("arg1", username);
+		return query.getResultList();
 	}
 	
 	
