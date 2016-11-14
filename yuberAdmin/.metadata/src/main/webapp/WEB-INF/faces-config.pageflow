@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14791581197340" configfile="/YuberAdmin/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="156" y="420" id="pf14791581848401" outlinks="pf14791581848402" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="welcome.xhtml" x="498" y="344" id="pf14791581848403" inlinks="pf14791581848402" path="/welcome.xhtml"/>
+  <links id="pf14791581848402" target="pf14791581848403" source="pf14791581848401" outcome="login"/>
+</pageflow:Pageflow>
