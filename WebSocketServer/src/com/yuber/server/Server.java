@@ -222,6 +222,7 @@ public class Server {
 			mat.setFinishLat(message.getLat());
 			mat.setFinishLng(message.getLng());
 			mat.setStatus("Finished");
+			System.out.println("Finalizar servicio: "+mat.toString());
 			Date date = new Date();
 			mat.setFinishTime(date);
 			mat.setReviewProveedor(message.getRating());
@@ -232,6 +233,7 @@ public class Server {
 			Double distTotal = calcularDistanciaTotal(mat.getPositions());
 			long tiempoServicio = (mat.getFinishTime().getTime() - mat.getStartTime().getTime())/1000; //cantidad segundos de servicio
 			tiempoServicio = tiempoServicio / 60; //en minutos
+			System.out.println("Finalizar servicio: calcular costo");
 			Double cost = CalcularCostoServicio(vertical, tiempoServicio, distTotal);
 			mat.setDuration(tiempoServicio);
 			mat.setCost(cost);
@@ -252,7 +254,7 @@ public class Server {
 				//se elimina de memoria
 				InitialContext ctx = new InitialContext();
 				System.out.println("Culmino el servicio: "+mat.toString());
-				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/YuberEJB/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
+				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/WebSocketServer-0.0.1-SNAPSHOT/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
 				Servicio serv = new Servicio(prov.getUserName(),cli.getUserName(),mat.getStatus(),mat.getStartTime(),mat.getFinishTime(),mat.getReviewProveedor(),mat.getReviewCliente(),mat.getCost(),mat.getDuration(),"");
 				CustomData cdata = new CustomData(mat.getStartLat(),mat.getStartLng(),mat.getFinishLat(),mat.getFinishLng(),mat.getDisTotal(),mat.getPositions());
 				serv.setCustomData(new Gson().toJson(cdata));
@@ -304,13 +306,16 @@ public class Server {
 	}
 	
 	private Double CalcularCostoServicio(String vertical,long timeService,double dist){
+		
 		String tipoVertical = System.getenv("tipoVertical");
+		System.out.println("Calcular costo vertical: "+tipoVertical);
 		InitialContext ctx;
 		Double total = 0.0;
 		try {
 			ctx = new InitialContext();
-			IVerticalServiceLocal verticalService = (IVerticalServiceLocal) ctx.lookup("java:global/" + getAppName() + "/YuberServices/VerticalService!tsi2.yuber.services.IVerticalServiceLocal");
+			IVerticalServiceLocal verticalService = (IVerticalServiceLocal) ctx.lookup("java:global/" + getAppName() + "/WebSocketServer-0.0.1-SNAPSHOT/VerticalService!tsi2.yuber.services.IVerticalServiceLocal");
 			Vertical vert = verticalService.findVertical(vertical);
+			System.out.println("Agarre la vertical: "+vert.toString());
 			if (tipoVertical.equals("1")){
 				// tipo transporte
 				Double tarBase = vert.getTarifaBase();
