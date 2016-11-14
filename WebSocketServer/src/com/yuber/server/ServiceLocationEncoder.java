@@ -17,6 +17,8 @@
 package com.yuber.server;
 
 import java.io.StringWriter;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import javax.json.Json;
 import javax.json.JsonNumber;
@@ -43,6 +45,12 @@ public class ServiceLocationEncoder implements Encoder.Text<ServiceLocation> {
 
     @Override
     public String encode(ServiceLocation serviceLocation) throws EncodeException {
+    	double costoTrunk = 1;
+    	if 	(serviceLocation.getCostService() != null){
+    		double number = serviceLocation.getCostService();
+	    	int aux = (int)(number*100);
+	    	costoTrunk = aux/100d;
+	    }
         JsonObjectBuilder json = Json.createObjectBuilder().
         add("respuesta", Json.createObjectBuilder()
         		.add( "command", serviceLocation.getCommand()).
@@ -52,7 +60,7 @@ public class ServiceLocationEncoder implements Encoder.Text<ServiceLocation> {
         		add( "lat", serviceLocation.getLat() == null ? JsonNumber.NULL : serviceLocation.getLat() ).
         		add( "comment", serviceLocation.getComment() == null ? "" : serviceLocation.getComment() ).
         		add( "rating", serviceLocation.getRating() == null ? 0 : serviceLocation.getRating() ).
-        		add( "costService", serviceLocation.getCostService() == null ? 0 : serviceLocation.getCostService() ).
+        		add( "costService", serviceLocation.getCostService() == null ? 0 : costoTrunk ).
         		add( "lng", serviceLocation.getLng() == null ? JsonNumber.NULL : serviceLocation.getLng() )
         		.build());
         StringWriter stWriter = new StringWriter();

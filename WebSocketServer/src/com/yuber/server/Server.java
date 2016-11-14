@@ -16,6 +16,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
 import com.yuber.collections.ManejadorVertical;
 import com.yuber.collections.VerticalesManager;
 
@@ -54,6 +55,7 @@ public class Server {
     public void onOpen(Session session,@PathParam("vertical") String vertical) {
 		ManejadorVertical man = VerticalesManager.getInstance().obtenerManejador(vertical);
         System.out.println("New websocket session opened in "+vertical +": " + session.getId());
+        session.setMaxIdleTimeout(0);
 		man.CrearSession(session);
     }
 	 
@@ -123,13 +125,14 @@ public class Server {
 			}
 		}
 		if (message.getCommand().equals("ClienteNuevo")){
+			
+		}
+		if (message.getCommand().equals("SolicitarServicio")){
 			man.CrearCliente(session.getId(),message.getUserName(),message.getLat(),message.getLng(),message.getAddress());
 			System.out.println("Se agrego cliente: "+message.getUserName()+" en "+vertical);
 			ServiceLocation respOk = new ServiceLocation();
 			respOk.setCommand("Ok");
 			session.getAsyncRemote().sendObject(respOk);
-		}
-		if (message.getCommand().equals("SolicitarServicio")){
 			Cliente cli = man.getCliente(session.getId());
 			System.out.println("Cliente: "+cli.getUserName()+"solicita servico");
 			man.CrearMatch("",session.getId());
@@ -146,16 +149,19 @@ public class Server {
 		}
 		if (message.getCommand().equals("ProveedorPosicion")){
 			System.out.println("proveedor update pos: "+message.getLat().toString());
-			Match mat = man.getMatch(session.getId());
-			if (mat.getStatus().equals("Active")){
-				mat.addPosition(message.getLat(),message.getLng());
+			Proveedor prov = man.getProveedor(session.getId());
+			if (!prov.getClientePendienteMatchId().isEmpty()){
+				Match mat = man.getMatch(session.getId());
+				if (mat.getStatus().equals("Active")){
+					mat.addPosition(message.getLat(),message.getLng());
+					Session sessionCli = man.getSession(mat.getClienteId());
+					ServiceLocation respUpdate = new ServiceLocation("UpdatePos", "",message.getLat(),message.getLng(),"");
+					sessionCli.getAsyncRemote().sendObject(respUpdate);
+				}
 			}
 				Proveedor provViejo = man.getProveedor(session.getId());
 				provViejo.setLat(message.getLat());
 				provViejo.setLng(message.getLng());
-				Session sessionCli = man.getSession(mat.getClienteId());
-				ServiceLocation respUpdate = new ServiceLocation("UpdatePos", "",message.getLat(),message.getLng(),"");
-				sessionCli.getAsyncRemote().sendObject(respUpdate);
 		}	
 		if (message.getCommand().equals("ProveedorAcceptMatch")){
 			Proveedor prov = man.getProveedor(session.getId());
@@ -227,13 +233,14 @@ public class Server {
 			Double cost = 10*distTotal; //aca iria el precio de la vertical
 			long tiempoServicio = (mat.getFinishTime().getTime() - mat.getStartTime().getTime())/1000; //cantidad segundos de servicio
 			tiempoServicio = tiempoServicio / 60; //en minutos
-			cost += 2*tiempoServicio; // aca iria el tiempo por minuto
 			mat.setDuration(tiempoServicio);
 			mat.setCost(cost);
 			mat.setDisTotal(distTotal);
 			ServiceLocation respTarifa = new ServiceLocation("ServicioFinalizado","",null,null,"","",0,cost);
 			session.getAsyncRemote().sendObject(respTarifa);
 			sessionCli.getAsyncRemote().sendObject(respTarifa);
+			Proveedor prov = man.getProveedor(session.getId());
+			prov.setClientePendienteMatchId("");
 		}
 		if (message.getCommand().equals("ReviewCliente")){
 			Match mat = man.getMatch(session.getId());
@@ -248,6 +255,8 @@ public class Server {
 				System.out.println("Culmino el servicio: "+mat.toString());
 				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/YuberEJB/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
 				Servicio serv = new Servicio(prov.getUserName(),cli.getUserName(),mat.getStatus(),mat.getStartTime(),mat.getFinishTime(),mat.getReviewProveedor(),mat.getReviewCliente(),mat.getCost(),mat.getDuration(),"");
+				CustomData cdata = new CustomData(mat.getStartLat(),mat.getStartLng(),mat.getFinishLat(),mat.getFinishLng(),mat.getDisTotal(),mat.getPositions());
+				serv.setCustomData(new Gson().toJson(cdata));
 				services.saveServicio(serv, vertical);
 				session.close(); //cierro websocket cliente
 				man.BorrarMatch(mat);
@@ -293,6 +302,10 @@ public class Server {
 		if ( appName == null)
 			return "myapp";
 		return appName;
+	}
+	
+	private Double CalcularCostoServicio(String vertical,long timeService,double dist){
+		return 0.0;
 	}
 
 }

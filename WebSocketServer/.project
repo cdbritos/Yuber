@@ -3,8 +3,6 @@
 	<name>WebSocketServer</name>
 	<comment></comment>
 	<projects>
-		<project>YuberModel</project>
-		<project>YuberEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
