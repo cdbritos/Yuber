@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import tsi2.yuber.model.entities.Vertical;
 import tsi2.yuber.services.IVerticalServiceLocal;
 import tsi2.yuber.services.util.VCAPUtils;
+import tsi2.yuber.services.util.VerticalCabezal;
 
 @Path("/vertical")
 public class VerticalServiceRest extends AbstractServiceRest{
@@ -54,7 +55,7 @@ public class VerticalServiceRest extends AbstractServiceRest{
 		
 		try {
 			List<Vertical> verticales = verticalService.findAll();
-			result = new Gson().toJson(verticales);
+			result = new Gson().toJson(new VerticalCabezal(verticales));
 			return Response.status(Status.OK).entity(result).build();
 		} catch (Exception e) {
 			e.printStackTrace();

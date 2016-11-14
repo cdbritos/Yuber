@@ -41,7 +41,6 @@ public class UserServiceRest extends AbstractServiceRest{
 	}
 	
 	@POST
-	@Path(value="/register")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
 	public Response register(InputStream data) {
@@ -102,6 +101,7 @@ public class UserServiceRest extends AbstractServiceRest{
 			List<User> users = userCommonService.findAllUser(verticalName);
 			
 			result = new Gson().toJson(users);
+			
 			
 			return Response.status(Status.OK).entity(result).build();
 			

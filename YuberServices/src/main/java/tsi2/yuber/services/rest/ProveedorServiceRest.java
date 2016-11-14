@@ -41,7 +41,6 @@ public class ProveedorServiceRest extends AbstractServiceRest {
 	}
 	
 	@POST
-	@Path(value="/register")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
 	public Response register(InputStream data) {
@@ -109,8 +108,6 @@ public class ProveedorServiceRest extends AbstractServiceRest {
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
-		
-		
 	} 
 	
 }
