@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	
+    	<ui:composition template="/template/common/commonLayout.xhtml">
+						
+			<ui:define name="content">
+    			<h:form>
+    				<p:panel id="panelAltaAdmin">
+    					
+    					<h:panelGrid columns="2" cellpadding="5">
+				            <h:outputLabel for="nombre" value="#{literales.label_nombre}:" />
+				            <p:inputText id="nombre" maxlength="20" value="#{adminController.administrador.adminName}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            	<f:validateLength maximum="20"/>
+				            </p:inputText>
+				            				            			            
+				            <h:outputLabel for="password" value="#{literales.label_password}:" />
+				            <p:password id="password" value="#{adminController.administrador.password}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            </p:password>
+				            
+							<h:outputLabel for="usuarioBluemix" value="#{literales.label_usuarioBluemix}:" />
+				            <p:inputText id="usuarioBluemix" value="#{adminController.administrador.usuarioBluemix}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            </p:inputText>
+							
+							<h:outputLabel for="passwordBluemix" value="#{literales.label_passwordBluemix}:" />
+				            <p:password id="passwordBluemix"  value="#{adminController.administrador.passwordBluemix}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            </p:password>
+				            
+				            <h:outputLabel for="spaceBluemix" value="#{literales.label_spaceBluemix}:" />
+				            <p:inputText id="spaceBluemix" value="#{adminController.administrador.spaceBluemix}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            </p:inputText>
+				            
+				            <h:outputLabel for="orgBluemix" value="#{literales.label_orgBluemix}:" />
+				            <p:inputText id="orgBluemix" value="#{adminController.administrador.orgBluemix}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">
+				            	<f:validateRequired/>
+				            </p:inputText>
+				 			
+
+				            <f:facet name="footer">
+				            	<p:commandButton id="volver" value="#{literales.boton_volver}" action="inicio" icon="fa fa-arrow-left" immediate="true"/>
+				                <h:commandButton id="registrar" action="#{adminController.doAltaAdministrador}" value="#{literales.boton_alta_admin}" />
+				            </f:facet>
+				            
+				            
+				        </h:panelGrid>
+
+				        <p:messages id="msgs"></p:messages>
+			
+    				</p:panel>            
+ 			    </h:form>
+    		</ui:define>
+    		
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

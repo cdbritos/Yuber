@@ -1,0 +1,143 @@
+#page{
+	width: 1200px;
+ 	height: 600px;
+	margin: 0 auto;
+}
+
+#header{
+	opacity:1;
+	border-radius: 15px;
+	width: 100%;
+	height:20%;
+	border: 1px solid #000;
+	margin-bottom:16px;
+	font-size: medium;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#headerRegistro{
+	opacity:1;
+	border-radius: 15px;
+	width: 100%;
+	height:20%;
+	border: 1px solid #000;
+	margin-bottom:16px;
+	font-size: medium;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#content{
+	border-radius: 10px;
+/* 	background-color:red; */
+	width: 80%;
+	height:100%;
+/* 	margin-right:16px; */
+/* 	border: 1px solid #000; */
+	float: right;
+}
+
+#contentRegistro{
+	border-radius: 10px;
+	width: 100%;
+	margin-bottom:16px;
+	border: 1px solid #000;
+	float: right;
+}
+
+#leftColumn{
+	border-radius: 10px;
+/* 	background-color:green; */
+	width: 18%;
+	height:100%;
+/* 	margin-right:16px; */
+/* 	border: 1px solid #000; */
+	float: left;
+}
+
+#rightColumn{
+	border-radius: 10px;
+/* 	background-color:blue; */
+	width: 10%;
+	height:100%;
+	border: 1px solid #000;
+	float: left;
+}
+
+#centerLayout{
+	margin-bottom:16px;
+	width: 100%;
+	height:400px;
+	opacity:0.8;
+}
+
+#footer{
+ 	clear:both;
+	width: 80%;
+	height:10%;
+	opacity:0.5;
+/* 	border: 1px solid #000; */
+/* 	border-radius: 15px; */
+	font-style: italic;
+	font-size: medium;
+	float: right;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#footerRegistro {
+ 	clear:both;
+	width: 100%;
+	height:10%;
+	opacity:0.5;
+/* 	border: 1px solid #000; */
+/* 	border-radius: 15px; */
+	font-style: italic;
+	font-size: medium;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.inputForm li{
+	margin-bottom: 6px;
+}
+
+.inputForm li label{
+	width: 100px;
+	display: inline-block;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.errorMessage{
+	color:red;
+}
+
+.menuLink{
+	margin-bottom: 10px;
+	height:20px;
+}
+
+.ui-menu-yuber{
+	width: 100%;
+	padding: 0;
+}
+
+.panelPrincipal{
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.buttons{
+	width: 100%;
+	text-align: center;;
+}
+
+.inputLabel{
+	text-align: right;
+	font-weight: bold;
+	width: 100%;
+}

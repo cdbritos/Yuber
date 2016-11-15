@@ -25,6 +25,7 @@ import tsi2.yuber.model.entities.Servicio;
 import tsi2.yuber.services.IProveedorCommonServiceLocal;
 import tsi2.yuber.services.util.HistorialCabezal;
 
+
 @Path("/proveedor")
 public class ProveedorServiceRest extends AbstractServiceRest {
 

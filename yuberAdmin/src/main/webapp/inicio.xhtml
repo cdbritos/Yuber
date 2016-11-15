@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+
+    	<ui:composition template="/template/common/commonLayout.xhtml">
+			    	    		
+    		<ui:define name="content">
+    			<h2>Bienvenido!! <h:outputText value="#{adminBean.administrador.adminName}"></h:outputText></h2>
+    			<h2></h2>
+    			
+    			<p:messages id="msgs"></p:messages>
+    			
+    			<h:form rendered="#{not empty dataBaseCreada}">
+    				Desea intentar crear la base de datos?
+    				
+    				<h:commandButton id="crearDB" action="#{verticalController.doCrearDataBase}" value="#{literales.boton_alta_dataBase}" />
+    			
+    			</h:form>
+    		</ui:define>
+    		
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

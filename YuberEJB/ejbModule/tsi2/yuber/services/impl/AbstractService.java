@@ -14,7 +14,7 @@ public class AbstractService {
 		EntityManagerFactory managerFactory = null;
 		Map<String, String> persistenceMap = new HashMap<String, String>();
 		
-		String DSJNDI_Name = "jdbc/yuberDB" + getTipoVertical() + "_" + verticalName;
+		String DSJNDI_Name = "jdbc/" + getDataBasePrefix() + getTipoVertical() + "_" + verticalName;
 		
 		persistenceMap.put("javax.persistence.jtaDataSource", DSJNDI_Name);	
 		
@@ -29,7 +29,7 @@ public class AbstractService {
 		EntityManagerFactory managerFactory = null;
 		Map<String, String> persistenceMap = new HashMap<String, String>();
 		
-		String DSJNDI_Name = "jdbc/yuberDB" + getTipoVertical();
+		String DSJNDI_Name = "jdbc/" + getDataBasePrefix() + getTipoVertical();
 		
 		persistenceMap.put("javax.persistence.jtaDataSource", DSJNDI_Name);	
 		
@@ -41,6 +41,13 @@ public class AbstractService {
 	
 	protected String getTipoVertical(){
 		return System.getenv("tipoVertical");
+	}
+	
+	protected String getDataBasePrefix(){
+		String prefix = System.getenv("dataBasePrefix");
+		if (prefix == null)
+			prefix = "yuberDB";
+		return prefix;
 	}
 
 	

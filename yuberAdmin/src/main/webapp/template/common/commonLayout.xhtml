@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      >
+	<f:view >
+		<h:head>
+		
+		</h:head>
+    
+	    <h:body>
+		
+		<h:outputStylesheet name="common-style.css" library="css" />
+		
+		<div id="page">
+			
+			<header id="header">
+				<ui:insert name="header" >
+					<ui:include src="/template/common/commonHeader.xhtml">
+						<ui:param name="funcionalidad" value="#{funcionalidad}"></ui:param>
+					</ui:include>
+				</ui:insert>
+		    </header>
+		    
+		    <section id="centerLayout">
+		    	<nav id="leftColumn">
+				   	<ui:insert name="leftColumn" >
+				   		<ui:include src="/template/common/commonLeftColumn.xhtml" />
+				   	</ui:insert>
+			    </nav>
+			    
+			    <section id="content">
+				   	<ui:insert name="content" >
+				   		<ui:include src="/template/common/commonContent.xhtml" />
+				   	</ui:insert>
+			    </section>
+			    
+	<!-- 		    <div id="rightColumn"> -->
+	<!-- 			   	<ui:insert name="rightColumn" > -->
+	<!-- 			   		<ui:include src="/template/common/commonLeftColumn.xhtml" /> -->
+	<!-- 			   	</ui:insert> -->
+	<!-- 		    </div> -->
+		    </section>
+			    
+		    <div id="footer">
+		    	<ui:insert name="footer" >
+		    		<ui:include src="/template/common/commonFooter.xhtml" />
+		    	</ui:insert>
+	    	</div>
+	    	
+	    </div>
+	    
+	    </h:body>
+		
+	</f:view>
+	
+</html>

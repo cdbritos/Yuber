@@ -3,17 +3,17 @@
 	<persistence-unit name="yuberAdmin">
 		<jta-data-source>jdbc/yuberAdminDB</jta-data-source>
 		<class>tsi2.yuber.admin.entities.Administrador</class>
-		<class>tsi2.yuber.admin.entities.Vertical</class>
-		<class>tsi2.yuber.admin.entities.TipoVertical</class>
-		<class>tsi2.yuber.admin.entities.VerticalPK</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 <!-- 		<properties> -->
-<!-- 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
-<!-- 			<property name="eclipselink.logging.logger" value="DefaultLogger"/> -->
+<!-- 			<property name="javax.persistence.schema-generation.database.action" value="create"/> -->
+<!-- 			<property name="javax.persistence.schema-generation.create-source" value="script"/> -->
+<!--         	<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/createBackend.sql" /> -->
+<!-- 			<property name="javax.persistence.schema-generation.create-database-schemas" value="true"/> -->
+<!--         	<property name="eclipselink.logging.logger" value="DefaultLogger"/> -->
 <!-- 			<property name="eclipselink.logging.level" value="FINE"/> -->
 <!-- 			<property name="eclipselink.logging.level.sql" value="FINE"/> -->
 <!-- 			<property name="eclipselink.logging.parameters" value="true"/>  -->
-<!-- 		</properties> -->
-	</persistence-unit>
+<!--       	</properties> -->
+     </persistence-unit>
 </persistence>
 

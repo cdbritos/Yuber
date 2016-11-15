@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+
+    	<ui:composition template="/template/common/commonLayout.xhtml">
+			    	    		
+    		<ui:define name="content">   			
+    			<h:form>
+    				<p:panelGrid columns="2" styleClass="panelPrincipal" >
+						<f:facet name="header">
+        					<h:outputLabel value="#{literales.label_preferencias}"/>					
+        				</f:facet>
+        				
+    					<h:outputLabel value="#{literales.label_tema}" styleClass="inputLabel"/>
+	    				<p:themeSwitcher id="switcher" style="width:165px" value="#{usuarioLogueado.lookAndFeel.theme.name}">
+	            			<f:selectItem itemLabel="#{literales.label_seleccione_tema}" itemValue="" />
+	            			<c:forEach var="theme" items="#{themeService.themes}">
+	            				<f:selectItem itemLabel="#{theme.displayName}" itemValue="#{theme.name}" />
+	            			</c:forEach>
+	        			</p:themeSwitcher>
+	        			
+	        			<h:outputLabel value="#{literales.label_color_fondo}" styleClass="inputLabel"/>
+	    				<p:colorPicker id="colorPicker" value="#{usuarioLogueado.lookAndFeel.backGround}" />
+	        			
+	        			<h:outputLabel value="#{literales.label_tipo_menu}" styleClass="inputLabel"/>
+	        			<p:selectOneMenu id="tipoMenu" value="#{usuarioLogueado.lookAndFeel.tipoMenu}">
+			                <f:selectItem itemValue="VERTICAL" itemLabel="#{literales.enum_tipoMenu_VERTICAL}" />
+			                <f:selectItem itemvalue="HORIZONTAL" itemLabel="#{literales.enum_tipoMenu_HORIZONTAL}" />
+			            </p:selectOneMenu>
+	    				
+
+	        			<h:outputLabel value="#{literales.label_idioma}" styleClass="inputLabel"/>
+	        			<p:selectOneMenu id="selIdioma" value="#{usuarioLogueado.locale}">
+			               	<c:forEach var="idioma" items="#{localeService.locales}">
+	            				<f:selectItem itemLabel="#{idioma.displayLanguage}" itemValue="#{idioma}" />
+	            			</c:forEach>
+	            			<f:converter converterId="localeConverter"/>
+			            </p:selectOneMenu>
+	        			
+        			</p:panelGrid>
+        			
+        			<nav class="buttons">
+        				<p:commandButton id="confirmar" value="#{literales.boton_confirmar}" action="#{usuarioLogueado.doConfirmarPreferencias}" icon="ui-icon-check" />
+        			</nav>
+    			</h:form>
+    			
+    		</ui:define>    		
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

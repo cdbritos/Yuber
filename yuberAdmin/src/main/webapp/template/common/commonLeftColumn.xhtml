@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <body>
+	    <ui:composition>
+	    	<p:panel id="panelMenu" header="#{literales.label_menu}" style="margin-bottom:20px">
+	        	<p:panelMenu styleClass="ui-menu-yuber">
+	   				<c:forEach var="subMenu" items="#{menuController.menu}">
+	   				 	<p:submenu id="menu_#{subMenu.nombre}" label="#{opciones_menu[subMenu.nombre]}" >
+	   				 		<c:forEach var="subMenuOpcion" items="#{subMenu.menuItems}">
+	   				 			<p:menuitem value="#{opciones_menu[subMenuOpcion.code]}" url="#{opciones_menu['url_'.concat(subMenuOpcion.code)]}.xhtml" icon="#{opciones_menu['icon_'.concat(subMenuOpcion.code)]}"/>
+	   				 		</c:forEach>
+	   				 	</p:submenu>
+					</c:forEach>
+					<p:submenu id="menu_OPCIONES_CUENTA" label="#{opciones_menu['OPCIONES_CUENTA']}" >
+						<p:menuitem value="#{opciones_menu['LOGOUT']}" outcome="login" action="#{loginController.doLogout}" icon="#{opciones_menu['icon_LOGOUT']}"/>
+					</p:submenu>					
+			    </p:panelMenu>     
+    		</p:panel>
+	    </ui:composition>
+    </body>
+</html>

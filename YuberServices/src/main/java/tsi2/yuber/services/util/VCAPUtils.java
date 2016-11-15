@@ -11,17 +11,24 @@ public class VCAPUtils {
 
 	private static final String VCAP_SERVICES = "VCAP_SERVICES";
 	
-	
-	public static String getTipoVertical(){
+	public static final String getTipoVertical(){
 		return System.getenv("tipoVertical");
 	}
 	
+	public static final String getDataBasePrefix(){
+		String prefix = System.getenv("dataBasePrefix");
+		if (prefix == null)
+			prefix = "yuberDB";
+		return prefix;
+	}
+
+		
 	public static String getVCAP_SERVICES(){
 		return System.getenv(VCAP_SERVICES);
 	}
 	
 	public static String getServicePostgreName(String vertical){
-		return "yuberDB" + getTipoVertical() + "_" + vertical;
+		return getDataBasePrefix() + getTipoVertical() + "_" + vertical;
 	}
 	
 

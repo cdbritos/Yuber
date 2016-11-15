@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config
-    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-    http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
-    version="2.0">
-
-    <navigation-rule>
-    	<display-name>login.xhtml</display-name>
-    	<from-view-id>/login.xhtml</from-view-id>
-    	<navigation-case>
-    		<from-outcome>login</from-outcome>
-    		<to-view-id>/welcome.xhtml</to-view-id>
-    	</navigation-case>
-    </navigation-rule> 
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+	
+	<application>
+		<locale-config>
+			<default-locale>es</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		
+		<resource-bundle>
+        	<base-name>resources.i18n.literales</base-name>
+            <var>literales</var>
+        </resource-bundle>
+	
+		<resource-bundle>
+        	<base-name>resources.i18n.opciones_menu</base-name>
+            <var>opciones_menu</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+        	<base-name>resources.i18n.errores</base-name>
+            <var>msgErr</var>
+        </resource-bundle>
+	</application>
+	
 </faces-config>

@@ -30,6 +30,8 @@ import tsi2.yuber.services.IVerticalServiceLocal;
 import tsi2.yuber.services.util.VCAPUtils;
 import tsi2.yuber.services.util.VerticalCabezal;
 
+
+
 @Path("/vertical")
 public class VerticalServiceRest extends AbstractServiceRest{
 

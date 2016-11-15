@@ -33,6 +33,7 @@ import tsi2.yuber.model.entities.User;
 import tsi2.yuber.services.IUserCommonServiceLocal;
 import tsi2.yuber.services.util.HistorialCabezal;
 
+
 @Path("/user")
 public class UserServiceRest extends AbstractServiceRest{
 
