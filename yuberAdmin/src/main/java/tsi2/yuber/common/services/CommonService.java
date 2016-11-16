@@ -94,8 +94,8 @@ public class CommonService implements ICommonService {
 		
 		client.login();
 
-		String appBackendName = "yyuberBackend" + vertical.getTipoVertical().getId();
-		String serviceName = "yyuberDB" + vertical.getTipoVertical().getId() + "_"  + vertical.getVerticalName();
+		String appBackendName = getBackendPrefix() + vertical.getTipoVertical().getId();
+		String serviceName = getDataBasePrefix() + vertical.getTipoVertical().getId() + "_"  + vertical.getVerticalName();
 		
 		// agrego vertical a tabla de backend
 		HttpClient clientRest = HttpClientBuilder.create().build();
@@ -174,7 +174,7 @@ public class CommonService implements ICommonService {
 	@Override
 	public void doCreateDataBase(Vertical vertical) throws DataBaseCreationException {
 		
-		String appBackendName = "yyuberBackend" + vertical.getTipoVertical().getId();
+		String appBackendName = getBackendPrefix() + vertical.getTipoVertical().getId();
 		
 		try {
 			HttpClient clientRest = HttpClientBuilder.create().build();
@@ -196,5 +196,17 @@ public class CommonService implements ICommonService {
 		
 	}
 
+	private String getBackendPrefix(){
+		String prefix = System.getenv("backendPrefix");
+		if (prefix == null)
+			prefix = "yuberBackend";
+		return prefix;
+	}
 
+	protected String getDataBasePrefix(){
+		String prefix = System.getenv("dataBasePrefix");
+		if (prefix == null)
+			prefix = "yuberDB";
+		return prefix;
+	}
 }
