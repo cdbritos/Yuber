@@ -166,11 +166,13 @@ public class UserServiceRest extends AbstractServiceRest{
 		     dostream.close();
 		     if (conn.getResponseCode() != 200 && conn.getResponseCode() != 201) {
 		         String errMsg = conn.getResponseMessage();
+		         System.out.println("EXPLOTO PAYPAL!, paypal devovlio error:" + conn.getResponseCode());
 		         throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + "  And now Error Message is : " + errMsg);
 		     }
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("EXPLOTO PAYPAL: " + e.toString());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 			return Response.status(Status.OK).entity("ok").build();
