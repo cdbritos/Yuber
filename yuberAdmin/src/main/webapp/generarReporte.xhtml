@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	
+    	<ui:composition template="/template/common/commonLayout.xhtml">
+						
+			<ui:define name="content">
+    			<h:form >
+    				<p:panel id="panelRegistro">
+    					
+    					<h:panelGrid columns="2" cellpadding="5">
+
+				            <h:outputLabel for="tipoVertical" value="#{literales.label_tipoVertical}:" />
+				            <p:selectOneRadio id="tipoVertical" value="#{reportController.report.tipoVertical}">
+            					<f:selectItem itemLabel="Transporte" itemValue="TRANSPORT" />
+            					<f:selectItem itemLabel="On-Site" itemValue="ONSITE" />
+            					<p:ajax update="vertical"></p:ajax>
+					        </p:selectOneRadio>
+				            
+          					<p:outputLabel for="vertical" value="#{literales.label_Vertical}:" />
+					        <p:selectOneMenu id="vertical" value="#{reportController.report.verticalName}">
+					        	<f:selectItems value="#{reportController.verticales}" ></f:selectItems>	            
+					        </p:selectOneMenu>
+				            				   
+				           	<h:outputLabel for="tipoReporte" value="#{literales.label_tipoReporte}:" />
+				            <p:selectOneRadio id="tipoReporte" value="#{reportController.report.tipoReporte}">
+				            	<f:selectItem itemLabel="Usuarios Activos" itemValue="REPORTE_USUARIOS_ACTIVOS" />
+            					<f:selectItem itemLabel="Ganancia Mensual" itemValue="REPORTE_GANANCIAS_MENSUAL" />
+            					<f:selectItem itemLabel="Proveedores By Review" itemValue="REPORTE_PROVEEDORES_BY_REVIEW" />
+            					<f:selectItem itemLabel="Proveedores By Ganancia" itemValue="REPORTE_PROVEEDORES_BY_GANANCIA" />
+            					<f:selectItem itemLabel="Usuarios By Servicios" itemValue="REPORTE_USUARIOS_BY_SERVICIOS" />
+            					<f:selectItem itemLabel="Usuarios By Review" itemValue="REPORTE_USUARIOS_BY_REVIEW" />
+					        </p:selectOneRadio>         
+				 			
+
+				            <f:facet name="footer">
+				            	<p:commandButton id="volver" value="#{literales.boton_volver}" action="inicio" icon="fa fa-arrow-left" immediate="true"/>
+				                <h:commandButton id="generarReport" action="#{reportController.doReport}" value="#{literales.boton_generar_report}" />
+<!-- 				                <h:commandButton id="popular" action="#{reportController.doPopulate}" value="#{literales.boton_popular_base}" /> -->
+				            </f:facet>
+				            
+				            
+				        </h:panelGrid>
+
+				        <p:messages id="msgs"></p:messages>
+			
+    				</p:panel>            
+ 			    </h:form>
+    		</ui:define>
+    		
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

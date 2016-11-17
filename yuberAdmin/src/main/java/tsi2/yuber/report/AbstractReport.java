@@ -1,6 +1,6 @@
 package tsi2.yuber.report;
 
-import tsi.tuber.admin.enums.TipoVerticalEnum;
+import tsi2.yuber.admin.enums.TipoVerticalEnum;
 
 public abstract class AbstractReport {
 	
@@ -25,7 +25,7 @@ public abstract class AbstractReport {
 	
 
 	protected String getHost(TipoVerticalEnum tv){
-		return Boolean.valueOf(System.getenv("isLocal")).booleanValue() ? "localhost:9080" : "yuberbackend" + tv.getId() + ".mybluemix.net" ;
+		return getBackendPrefix() + tv.getId() + ".mybluemix.net" ;
 	}
 
 	protected String getUrl(){
@@ -35,4 +35,11 @@ public abstract class AbstractReport {
 		
 		return url;
 	} 
+	
+	private String getBackendPrefix(){
+		String prefix = System.getenv("backendPrefix");
+		if (prefix == null)
+			prefix = "yuberBackend";
+		return prefix;
+	}
 }

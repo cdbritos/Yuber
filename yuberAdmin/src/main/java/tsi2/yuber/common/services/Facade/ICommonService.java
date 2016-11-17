@@ -1,8 +1,11 @@
 package tsi2.yuber.common.services.Facade;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import tsi2.yuber.admin.entities.Administrador;
+import tsi2.yuber.admin.enums.TipoVerticalEnum;
 import tsi2.yuber.common.data.Vertical;
 import tsi2.yuber.common.exception.DataBaseCreationException;
 import tsi2.yuber.common.exception.ServiceException;
@@ -18,4 +21,8 @@ public interface ICommonService {
 	public void doLogout() throws ServiceException;
 
 	public void doCreateDataBase(Vertical vertical) throws DataBaseCreationException;
+	
+	public List<String> getVerticales(TipoVerticalEnum tipoVertical);
+	
+	public void popularBase(TipoVerticalEnum tipoVertical, String verticalName) throws ServiceException;
 }

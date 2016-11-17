@@ -22,12 +22,8 @@ public class MenuBuilder implements Serializable {
 			new MenuItem("ALTA_ADMINISTRADOR"),
 			new MenuItem("ALTA_VERTICAL")));
 		menu.add(new Menu("REPORTES",
-			new MenuItem("REPORTE_USUARIOS_ACTIVOS"),
-			new MenuItem("REPORTE_GANANCIAS_MENSUAL"),
-			new MenuItem("REPORTE_PROVEEDORES_BY_REVIEW"),
-			new MenuItem("REPORTE_PROVEEDORES_BY_GANANCIA"),
-			new MenuItem("REPORTE_USUARIOS_BY_REVIEW"),
-			new MenuItem("REPORTE_USUARIOS_BY_SERVICIOS")));
+			new MenuItem("REPORTE_GENERAR_REPORTE")
+			));
 		
 		return menu;
 	}

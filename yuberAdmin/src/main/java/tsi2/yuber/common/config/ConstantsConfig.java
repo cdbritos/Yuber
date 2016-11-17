@@ -7,8 +7,10 @@ public class ConstantsConfig {
 	public static final String VERTICAL_CONTROLLER = "verticalController";
 	public static final String MENU_CONTROLLER = "menuController";
 	public static final String ADMIN_CONTROLLER = "adminController";
+	public static final String REPORT_CONTROLLER = "reportController";
 	
 	public static final String ADMIN_BEAN = "adminBean";
+	public static final String REPORT_BEAN = "reportBean";
 	
 	public static final String CONSTANTS_WEB = "constantsWeb";
 	

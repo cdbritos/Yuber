@@ -5,11 +5,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
@@ -22,14 +23,19 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.cloudfoundry.client.lib.CloudCredentials;
 import org.cloudfoundry.client.lib.CloudFoundryClient;
-import org.cloudfoundry.client.lib.domain.ApplicationStats;
 import org.cloudfoundry.client.lib.domain.CloudService;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import tsi2.yuber.admin.entities.Administrador;
+import tsi2.yuber.admin.enums.TipoVerticalEnum;
 import tsi2.yuber.common.data.Vertical;
 import tsi2.yuber.common.exception.DataBaseCreationException;
 import tsi2.yuber.common.exception.ServiceException;
@@ -208,5 +214,65 @@ public class CommonService implements ICommonService {
 		if (prefix == null)
 			prefix = "yuberDB";
 		return prefix;
+	}
+
+
+	@Override
+	public List<String> getVerticales(TipoVerticalEnum tipoVertical){
+		String appBackendName = getBackendPrefix() + tipoVertical.getId();
+		HttpClient clientRest = HttpClientBuilder.create().build();
+		HttpGet requestRest = new HttpGet("http://"+ appBackendName + ".mybluemix.net/YuberServices/rest/vertical/all" );
+		List<String> result = new ArrayList<String>();
+		try {
+			
+			HttpResponse response = clientRest.execute(requestRest);
+			
+			if (Status.OK.getStatusCode() == response.getStatusLine().getStatusCode()){
+				String verticales = EntityUtils.toString(response.getEntity());
+				JsonElement jsonElem = new JsonParser().parse(verticales);
+				JsonObject jsonObj = jsonElem.getAsJsonObject();
+				JsonArray jarray = jsonObj.getAsJsonArray("verticales");
+				
+				for (JsonElement jsonElement : jarray) {
+					result.add(jsonElement.getAsJsonObject().get("verticalName").getAsString());			
+				}
+			}
+			
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public void popularBase(TipoVerticalEnum tipoVertical, String verticalName) throws ServiceException {
+		String appBackendName = getBackendPrefix() + tipoVertical.getId();
+		
+		HttpClient clientRest = HttpClientBuilder.create().build();
+		
+		HttpGet requestRest = new HttpGet("http://"+ appBackendName + ".mybluemix.net/YuberServices/rest/populate/users/" + verticalName );
+		System.out.println("http://"+ appBackendName + ".mybluemix.net/YuberServices/rest/populate/users/" + verticalName);
+		try {
+			HttpResponse response = clientRest.execute(requestRest);
+			
+			if (Status.OK.getStatusCode() != response.getStatusLine().getStatusCode())
+				throw new ServiceException("Error al popular usuarios");
+			
+			requestRest = new HttpGet("http://"+ appBackendName + ".mybluemix.net/YuberServices/rest/populate/services/" + verticalName );
+			response = clientRest.execute(requestRest);
+			
+			if (Status.OK.getStatusCode() != response.getStatusLine().getStatusCode())
+				throw new ServiceException("Error al popular servicios");
+			
+		} catch (ClientProtocolException e) {
+			throw new ServiceException(e.getMessage());
+		} catch (IOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		
 	}
 }

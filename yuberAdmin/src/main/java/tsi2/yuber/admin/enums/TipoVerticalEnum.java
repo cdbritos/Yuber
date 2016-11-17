@@ -1,10 +1,9 @@
-package tsi.tuber.admin.enums;
+package tsi2.yuber.admin.enums;
 
 public enum TipoVerticalEnum {
 
 	TRANSPORT(1),
-	ONSITE(2),
-	REMOTE(3);
+	ONSITE(2);
 	
 	private int id;
 

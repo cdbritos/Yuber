@@ -40,7 +40,9 @@
 				            </p:inputText>
 				            
 				            <h:outputLabel for="color" value="#{literales.label_color}:" />
-				            <p:colorPicker value="#{verticalController.vertical.color}" />   
+				            <p:colorPicker value="#{verticalController.vertical.color}"  required="true">
+				           		<f:validateRequired/>
+				           	</p:colorPicker>
 				            
 				            <h:outputLabel for="urlweb" value="#{literales.label_urlWeb}:" />
 				            <p:inputText id="urlweb" value="#{verticalController.vertical.urlWeb}" label="#{literales.label_nombre}" requiredMessage="#{literales.label_nombre} #{msgErr.dato_mandatorio}">

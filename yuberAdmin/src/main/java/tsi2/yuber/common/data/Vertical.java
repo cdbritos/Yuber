@@ -3,7 +3,7 @@ package tsi2.yuber.common.data;
 import java.io.Serializable;
 import java.util.Date;
 
-import tsi.tuber.admin.enums.TipoVerticalEnum;
+import tsi2.yuber.admin.enums.TipoVerticalEnum;
 
 public class Vertical implements Serializable {
 	
@@ -21,7 +21,7 @@ public class Vertical implements Serializable {
 	
 	private String urlLogo;
 	
-	private String color;
+	private String color = "FFFFF";
 	
 	private String urlWeb;
 

@@ -24,7 +24,4 @@ public class AdminBean implements Serializable{
 		this.administrador = administrador;
 	}
 	
-	
-	
-	
 }

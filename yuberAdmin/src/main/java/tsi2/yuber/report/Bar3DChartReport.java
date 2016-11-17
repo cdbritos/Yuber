@@ -25,7 +25,7 @@ import net.sf.dynamicreports.report.builder.style.FontBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
-import tsi.tuber.admin.enums.TipoVerticalEnum;
+import tsi2.yuber.admin.enums.TipoVerticalEnum;
 
 public class Bar3DChartReport extends AbstractReport {
 
