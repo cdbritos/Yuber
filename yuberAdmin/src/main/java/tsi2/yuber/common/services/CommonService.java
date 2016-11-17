@@ -109,6 +109,7 @@ public class CommonService implements ICommonService {
 		
 		StringEntity strEntity = null;
 		try {
+			vertical.setColor("#" + vertical.getColor());
 			strEntity = new StringEntity(new Gson().toJson(vertical));
 		} catch (UnsupportedEncodingException e) {
 			throw new ServiceException(e.getMessage());
