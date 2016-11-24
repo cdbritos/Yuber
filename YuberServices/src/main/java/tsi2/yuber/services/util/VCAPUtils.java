@@ -51,7 +51,6 @@ public class VCAPUtils {
 		
 		JsonElement j = getJSONPostgreDB(vertical).getAsJsonObject().get("credentials");
 		String uri_cli = j.getAsJsonObject().get("uri_cli").getAsString();
-		
 		return StringUtils.substringBetween(uri_cli, "host=", " ");
 	}
 	
