@@ -100,7 +100,6 @@ public class Server {
 							ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
 							var.getAsyncRemote().sendObject(respTimeOut);
 						}
-						this.join();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -172,8 +171,12 @@ public class Server {
 					mat.setStatus("Active");
 					mat.setProveedorAccept(true);
 					mat.setProveedorId(session.getId());
+					InitialContext ctx;
+					ctx = new InitialContext();
+					IProveedorCommonServiceLocal proveedorCommonService = (IProveedorCommonServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/WebSocketServer-0.0.1-SNAPSHOT/ProveedorCommonService!tsi2.yuber.services.IProveedorCommonServiceLocal");
+					tsi2.yuber.model.entities.Proveedor proveedorDB = proveedorCommonService.findProveedorByUsername(vertical,prov.getUserName());
 					ServiceLocation respMatch= new ServiceLocation("Match",prov.getUserName(),prov.getLat(),prov.getLng());
-					respMatch.setTelefono(prov.getTelefono());
+					respMatch.setTelefono(proveedorDB.getTelefono());
 					Session sessionCli = man.getSession(mat.getClienteId());
 					sessionCli.getAsyncRemote().sendObject(respMatch);
 				}else{

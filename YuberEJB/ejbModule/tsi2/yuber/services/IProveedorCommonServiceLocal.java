@@ -20,5 +20,7 @@ public interface IProveedorCommonServiceLocal {
 	public void populate(String verticalName);
 
 	public List<Servicio> findServiciosProveedor(String vertical, String username);
+
+	Proveedor findProveedorByUsername(String verticalName, String username);
 	
 }
