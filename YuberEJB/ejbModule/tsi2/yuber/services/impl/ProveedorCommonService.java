@@ -40,7 +40,7 @@ public class ProveedorCommonService extends AbstractService implements IProveedo
 		EntityManager em = getEntityManager(verticalName);
 		Query query = em.createQuery("Select p from Proveedor p where p.userName =:arg1");
 		query.setParameter("arg1", username);
-		return (Proveedor) query.getResultList();
+		return (Proveedor) query.getSingleResult();
 	}
 
 	@Override

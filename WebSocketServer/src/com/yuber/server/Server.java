@@ -37,9 +37,28 @@ import java.util.Date;;
 public class Server {
 	private final double distanciaMinimaComenzar = 0.150; //in KM
 	private final double distanciaMinimaSolicitar = 3.0; //in KM
-	private final long timeoutSolicitar = 60000; //in milisegs
+	private final long timeoutSolicitar = 20000; //in milisegs
 	private Session sessionTimer = null;
 	private String verticalTimer = null;
+	
+	Thread timerSolicitar = new Thread() {
+	    public void run() {
+	    		ManejadorVertical man = VerticalesManager.getInstance().obtenerManejador(verticalTimer);
+	    		Session var = sessionTimer;
+				try {
+					this.sleep(timeoutSolicitar);
+					Match mat = man.getMatch(var.getId());
+					if (mat.getStatus().equals("Pendiente")){
+						mat.setStatus("Timeout");
+						ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
+						var.getAsyncRemote().sendObject(respTimeOut);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    }  
+	};
 	
 	/*
 	 	-se regsitran clientes y proveedores
@@ -88,24 +107,7 @@ public class Server {
 		System.out.println(man.ImprimirClientes());
 		System.out.println(man.ImprimirProveedores());
 	try{
-		Thread timerSolicitar = new Thread() {
-		    public void run() {
-		    		ManejadorVertical man = VerticalesManager.getInstance().obtenerManejador(verticalTimer);
-		    		Session var = sessionTimer;
-					try {
-						Thread.sleep(timeoutSolicitar);
-						Match mat = man.getMatch(var.getId());
-						if (mat.getStatus().equals("Pendiente")){
-							mat.setStatus("Timeout");
-							ServiceLocation respTimeOut = new ServiceLocation("ErrorTimeOut", "",null,null,"");
-							var.getAsyncRemote().sendObject(respTimeOut);
-						}
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    }  
-		};
+		
 		if (message.getCommand().equals("ProveedorDisponible")){
 			man.CrearProveedor(session.getId(),message.getUserName(),message.getLat(),message.getLng(),message.getTelefono());
 			Proveedor prov = man.getProveedor(session.getId());
@@ -121,7 +123,7 @@ public class Server {
 				if (prov.getClientePendienteMatchId().isEmpty() &&  distProvCli < distanciaMinimaSolicitar){
 					prov.setClientePendienteMatchId(cli.getSessionId());
 					System.out.println("Distancia al cliente: "+distProvCli);
-					ServiceLocation respMatchProveedor = new ServiceLocation("SolicitudMatch", cli.getUserName(),cli.getLat(),cli.getLng(),cli.getAddress());
+					ServiceLocation respMatchProveedor = new ServiceLocation("SolicitudMatch", cli.getUserName(),cli.getLat(),cli.getLng(),"Julio Herrera y Reissig 565");
 					session.getAsyncRemote().sendObject(respMatchProveedor);
 				}
 			}
@@ -260,7 +262,7 @@ public class Server {
 				IServiciosServiceLocal services = (IServiciosServiceLocal) ctx.lookup("java:global/" + getAppName() +  "/WebSocketServer-0.0.1-SNAPSHOT/ServiciosService!tsi2.yuber.services.IServiciosServiceLocal");
 				Servicio serv = new Servicio(prov.getUserName(),cli.getUserName(),mat.getStatus(),mat.getStartTime(),mat.getFinishTime(),mat.getReviewProveedor(),mat.getReviewCliente(),mat.getCost(),mat.getDuration(),"");
 				CustomData cdata = new CustomData(mat.getStartLat(),mat.getStartLng(),mat.getFinishLat(),mat.getFinishLng(),mat.getDisTotal(),mat.getPositions());
-				serv.setCustomData(new Gson().toJson(cdata));
+				serv.setCustomData(cdata.toString());
 				services.saveServicio(serv, vertical);
 				session.close(); //cierro websocket cliente
 				man.BorrarMatch(mat);
