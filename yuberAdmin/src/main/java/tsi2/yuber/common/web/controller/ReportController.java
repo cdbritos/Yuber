@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ import tsi2.yuber.report.Pie3DChartReport;
 import tsi2.yuber.report.StackedBar3DChartReport;
 
 @ManagedBean(name=ConstantsConfig.REPORT_CONTROLLER)
+@ViewScoped
 public class ReportController {
 
 	@EJB
@@ -48,6 +50,8 @@ public class ReportController {
 		
 		OutputStream out = response.getOutputStream();
 		
+		System.out.println("attachment;filename=Reporte" + this.report.getTipoReporte().getId() + "_" + this.report.getVerticalName() + ".pdf");
+		System.out.println(this.report.getTipoVertical().name() + "###"+ this.report.getTipoVertical().getId());
 		switch (this.report.getTipoReporte().getId()){
 		case "1":// Datos por Vertical
 			new Bar3DChartReport(out,this.report.getTipoVertical(),this.report.getTipoReporte().getId());
@@ -89,6 +93,12 @@ public class ReportController {
 	}
 	
 	public List<String> getVerticales(){
-		return commonService.getVerticales(this.report.getTipoVertical());
+		List<String> verticales = commonService.getVerticales(this.report.getTipoVertical());
+		if (verticales != null && !verticales.isEmpty())
+			this.report.setVerticalName(verticales.get(0));
+		
+		return verticales;
+		
 	}
+	
 }

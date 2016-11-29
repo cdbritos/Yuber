@@ -32,4 +32,6 @@ public class Report implements Serializable{
 		this.tipoReporte = tipoReporte;
 	}
 	
+	
+	
 }
