@@ -58,6 +58,13 @@ public class CustomData {
 		this.disTotal = disTotal;
 		this.travel = travel;
 	}
+	@Override
+	public String toString() {
+		return "CustomData [startLat=" + startLat + ", startLng=" + startLng + ", finishLat=" + finishLat
+				+ ", finishLng=" + finishLng + ", disTotal=" + disTotal + ", travel=" + travel + "]";
+	}
+	
+	
 	
 	
 

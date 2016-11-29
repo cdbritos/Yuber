@@ -69,7 +69,7 @@ public class ManejadorVertical {
 	
 	public synchronized void NotificarProveedoresCercanos(Cliente cli, double distanciaMinimaSolicitar ){
 			Proveedor prov;
-			ServiceLocation respMatchProveedor = new ServiceLocation("SolicitudMatch", cli.getUserName(),cli.getLat(),cli.getLng(),cli.getAddress());
+			ServiceLocation respMatchProveedor = new ServiceLocation("SolicitudMatch", cli.getUserName(),cli.getLat(),cli.getLng(),"Julio Herrera y Reissig 565");
 			for (Map.Entry<String, Proveedor> entry : proveedoresActivos.entrySet())
 			{
 				prov = entry.getValue();

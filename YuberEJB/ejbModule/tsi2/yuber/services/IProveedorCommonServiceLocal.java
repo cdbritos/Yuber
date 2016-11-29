@@ -21,6 +21,6 @@ public interface IProveedorCommonServiceLocal {
 
 	public List<Servicio> findServiciosProveedor(String vertical, String username);
 
-	Proveedor findProveedorByUsername(String verticalName, String username);
+	public Proveedor findProveedorByUsername(String verticalName, String username);
 	
 }

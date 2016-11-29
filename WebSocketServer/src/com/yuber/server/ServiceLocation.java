@@ -10,7 +10,7 @@ public class ServiceLocation {
     private String address;
     private String comment;
     private Integer rating;
-    private String Telefono;
+    private String phone;
     private Double costService;
     
     
@@ -32,12 +32,12 @@ public class ServiceLocation {
     
     
 	public String getTelefono() {
-		return Telefono;
+		return phone;
 	}
 
 
 	public void setTelefono(String telefono) {
-		Telefono = telefono;
+		phone = telefono;
 	}
 
 
